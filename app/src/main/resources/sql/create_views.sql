@@ -9,7 +9,8 @@ AS
         (SELECT EmployeeLogin, COUNT(*) as OrdersCount FROM Orders GROUP BY EmployeeLogin) as countTable
     WHERE DATEDIFF(dayofyear, Orders.StatusChangeDate , GETDATE()) <= 365 AND Status = N'Завершен'
         AND countTable.EmployeeLogin = Orders.EmployeeLogin
-    ORDER BY countTable.OrdersCount;
+    ORDER BY countTable.OrdersCount DESC
+    OFFSET 0 ROWS;
 GO
 
 -- 2. Вывод информации о клиентах с их учетными данными
