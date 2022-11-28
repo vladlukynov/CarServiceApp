@@ -41,7 +41,7 @@ GO
 GO
 CREATE VIEW GetOrderWithSum
 AS
-SELECT * FROM
+SELECT *, dbo.GetOrderSum(InfoTable.OrderId) as Total FROM
     (SELECT Orders.OrderId, CarId, CarNumber, Status, CreationDate, StatusChangeDate, EmployeeLogin,
             ServiceName as Element, OrdersServices.Quantity, (OrdersServices.Quantity * Services.Price) as ElementSum
     FROM Orders
@@ -52,19 +52,5 @@ SELECT * FROM
            DetailName, OrdersDetails.Quantity, (OrdersDetails.Quantity * Details.Price)
     FROM Orders
         JOIN OrdersDetails ON Orders.OrderId = OrdersDetails.OrderId
-        JOIN Details ON OrdersDetails.DetailId = Details.DetailId) as InfoTable,
-    (SELECT OrderId, SUM(Table1.ElementSum) as Total FROM
-        (SELECT Orders.OrderId, CarId, CarNumber, Status, CreationDate, StatusChangeDate, EmployeeLogin,
-                ServiceName as Element, OrdersServices.Quantity, (OrdersServices.Quantity * Services.Price) as ElementSum
-        FROM Orders
-            JOIN OrdersServices ON Orders.OrderId = OrdersServices.OrderId
-            JOIN Services ON OrdersServices.ServiceId = Services.ServiceId
-        UNION
-        SELECT Orders.OrderId, CarId, CarNumber, Status, CreationDate, StatusChangeDate, EmployeeLogin,
-               DetailName, OrdersDetails.Quantity, (OrdersDetails.Quantity * Details.Price)
-        FROM Orders
-            JOIN OrdersDetails ON Orders.OrderId = OrdersDetails.OrderId
-            JOIN Details ON OrdersDetails.DetailId = Details.DetailId) as Table1
-        GROUP BY OrderId) as SumTable
-        WHERE SumTable.OrderId = InfoTable.OrderId;
+        JOIN Details ON OrdersDetails.DetailId = Details.DetailId) as InfoTable;
 GO

@@ -331,29 +331,17 @@ GO
 CREATE PROCEDURE GetClientOrdersWithSum
     @ClientLogin VARCHAR(30)
 AS
-    DECLARE @ServicesSum INT;
-    DECLARE @DetailsSum INT;
-
-    SET @DetailsSum = (SELECT SUM(Details.Price * OrdersDetails.Quantity) FROM Orders
-                           JOIN OrdersDetails ON Orders.OrderId = OrdersDetails.OrderId
-                           JOIN Details ON OrdersDetails.DetailId = Details.DetailId
-                       WHERE Orders.ClientLogin = @ClientLogin);
-
-    SET @ServicesSum = (SELECT SUM(Services.Price * OrdersServices.Quantity) FROM Orders
-                            JOIN OrdersServices ON Orders.OrderId = OrdersServices.OrderId
-                            JOIN Services ON OrdersServices.ServiceId = Services.ServiceId
-                        WHERE Orders.ClientLogin = @ClientLogin);
-
-    SELECT *, @DetailsSum + @ServicesSum as Total FROM
+    SELECT *, dbo.GetOrderSum(InfoTable.OrderId) as Total FROM
         (SELECT Orders.OrderId, CarId, CarNumber, Status, CreationDate, StatusChangeDate, EmployeeLogin,
-                ServiceName as Element, OrdersServices.Quantity, @ServicesSum as ElementSum
+                ServiceName as Element, OrdersServices.Quantity,
+                (OrdersServices.Quantity * Services.Price) as ElementSum
         FROM Orders
             JOIN OrdersServices ON Orders.OrderId = OrdersServices.OrderId
             JOIN Services ON OrdersServices.ServiceId = Services.ServiceId
         WHERE Orders.ClientLogin = @ClientLogin
         UNION
         SELECT Orders.OrderId, CarId, CarNumber, Status, CreationDate, StatusChangeDate, EmployeeLogin,
-               DetailName, OrdersDetails.Quantity, @DetailsSum
+               DetailName, OrdersDetails.Quantity, (OrdersDetails.Quantity * Details.Price)
         FROM Orders
             JOIN OrdersDetails ON Orders.OrderId = OrdersDetails.OrderId
             JOIN Details ON OrdersDetails.DetailId = Details.DetailId
@@ -392,11 +380,11 @@ GO
 -- Таблицы: Orders, OrdersServices, OrdersDetails, Details, Services
 -- Входные данные: ID заказа
 GO
-CREATE PROCEDURE GetOrderSum
-    @OrderId INT
-AS
-    DECLARE @ServicesSum INT;
+CREATE FUNCTION GetOrderSum (@OrderId INT)
+RETURNS INT
+BEGIN
     DECLARE @DetailsSum INT;
+    DECLARE @ServicesSum INT;
 
     SET @DetailsSum = (SELECT SUM(Details.Price * OrdersDetails.Quantity) FROM Orders
                            JOIN OrdersDetails ON Orders.OrderId = OrdersDetails.OrderId
@@ -404,11 +392,12 @@ AS
                        WHERE Orders.OrderId = @OrderId);
 
     SET @ServicesSum = (SELECT SUM(Services.Price * OrdersServices.Quantity) FROM Orders
-                            JOIN OrdersServices ON Orders.OrderId = OrdersServices.OrderId
-                            JOIN Services ON OrdersServices.ServiceId = Services.ServiceId
+                           JOIN OrdersServices ON Orders.OrderId = OrdersServices.OrderId
+                           JOIN Services ON OrdersServices.ServiceId = Services.ServiceId
                         WHERE Orders.OrderId = @OrderId);
 
-    SELECT @ServicesSum as ServicesSum, @DetailsSum as DetailsSum, @ServicesSum + @DetailsSum as Total;
+    RETURN @ServicesSum + @DetailsSum;
+END;
 GO
 
 -- 9. Добавление детали к заказу и уменьшение количества оставшихся деталей на складе Таблицы: OrdersDetails, Details
