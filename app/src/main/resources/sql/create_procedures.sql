@@ -341,7 +341,7 @@ CREATE PROCEDURE GetClientOrdersWithSum
 AS
     SELECT *, dbo.GetOrderSum(InfoTable.OrderId) as Total FROM
         (SELECT Orders.OrderId, CarId, CarNumber, Status, CreationDate, StatusChangeDate, EmployeeLogin,
-                ServiceName as Element, OrdersServices.Quantity,
+                ServiceName as Element, Price, OrdersServices.Quantity,
                 (OrdersServices.Quantity * Services.Price) as ElementSum
         FROM Orders
             JOIN OrdersServices ON Orders.OrderId = OrdersServices.OrderId
@@ -349,7 +349,7 @@ AS
         WHERE Orders.ClientLogin = @ClientLogin
         UNION
         SELECT Orders.OrderId, CarId, CarNumber, Status, CreationDate, StatusChangeDate, EmployeeLogin,
-               DetailName, OrdersDetails.Quantity, (OrdersDetails.Quantity * Details.Price)
+               DetailName, Price, OrdersDetails.Quantity, (OrdersDetails.Quantity * Details.Price)
         FROM Orders
             JOIN OrdersDetails ON Orders.OrderId = OrdersDetails.OrderId
             JOIN Details ON OrdersDetails.DetailId = Details.DetailId
@@ -389,7 +389,7 @@ GO
 -- Входные данные: ID заказа
 GO
 CREATE FUNCTION GetOrderSum (@OrderId INT)
-RETURNS INT
+RETURNS MONEY
 BEGIN
     DECLARE @DetailsSum INT;
     DECLARE @ServicesSum INT;
@@ -419,14 +419,16 @@ AS
     SET XACT_ABORT ON;
     BEGIN TRANSACTION;
         DECLARE @DetailQuantity INT;
-        DECLARE @DeleteDetailQuantity INT;
 
         SET @DetailQuantity = (SELECT Quantity FROM Details WHERE DetailId = @DetailId);
-        SET @DeleteDetailQuantity = (SELECT Quantity FROM OrdersDetails WHERE OrderId = @OrderId AND DetailId = @DetailId);
 
-        INSERT INTO OrdersDetails (OrderId, DetailId, Quantity)
-            VALUES (@OrderId, @DetailId, @Quantity);
-        UPDATE Details SET Quantity = @DetailQuantity - @DeleteDetailQuantity WHERE DetailId = @DetailId;
+        IF EXISTS(SELECT * FROM OrdersDetails WHERE OrderId = @OrderId AND DetailId = @DetailId)
+            UPDATE OrdersDetails SET Quantity = Quantity + @Quantity
+                WHERE DetailId = @DetailId AND OrderId = @OrderId;
+        ELSE
+            INSERT INTO OrdersDetails (OrderId, DetailId, Quantity)
+                VALUES (@OrderId, @DetailId, @Quantity);
+        UPDATE Details SET Quantity = @DetailQuantity - @Quantity WHERE DetailId = @DetailId;
     COMMIT;
 GO
 
