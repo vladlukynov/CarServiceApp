@@ -257,10 +257,11 @@ GO
 
 -- 3. Изменение информации о сотруднике и/или его учетных данных по логину сотрудника
 -- Таблицы: Users, Employees
--- Входные данные: UserLogin, Pass, Email, PhoneNumber, RoleId, FirstName, LastName, MiddleName, Post, Salary, Birthday
+-- Входные данные: UserLogin, Pass, Email, PhoneNumber, RoleId, FirstName, LastName, MiddleName, Post, Salary, Birthday  
 GO
 CREATE PROCEDURE EditEmployee
     @UserLogin VARCHAR(30),
+	@NewLogin VARCHAR(30),
     @Pass VARCHAR(32),
     @Email VARCHAR(30),
     @PhoneNumber VARCHAR(15),
@@ -275,7 +276,7 @@ AS
     SET XACT_ABORT ON;
     BEGIN TRANSACTION;
         UPDATE Employees SET
-            UserLogin = @UserLogin,
+            UserLogin = @NewLogin,
             FirstName = @FirstName,
             LastName = @LastName,
             MiddleName = @MiddleName,
@@ -283,8 +284,11 @@ AS
             Salary = @Salary,
             Birthday = @Birthday
         WHERE Employees.UserLogin = @UserLogin;
-        UPDATE Users SET
-            UserLogin = @UserLogin,
+		UPDATE Orders SET
+			EmployeeLogin = @NewLogin
+		WHERE Orders.EmployeeLogin = @UserLogin;
+		UPDATE Users SET
+            UserLogin = @NewLogin,
             Pass = @Pass,
             Email = @Email,
             PhoneNumber = @PhoneNumber,
@@ -299,6 +303,7 @@ GO
 GO
 CREATE PROCEDURE EditClient
     @UserLogin VARCHAR(30),
+	@NewLogin VARCHAR(30),
     @Pass VARCHAR(32),
     @Email VARCHAR(30),
     @PhoneNumber VARCHAR(15),
@@ -310,14 +315,17 @@ AS
     SET XACT_ABORT ON;
     BEGIN TRANSACTION;
         UPDATE Clients SET
-            UserLogin = @UserLogin,
+            UserLogin = @NewLogin,
             FirstName = @FirstName,
             LastName = @LastName,
             MiddleName = @MiddleName,
             Birthday = @Birthday
         WHERE Clients.UserLogin = @UserLogin;
+		UPDATE Orders SET
+			ClientLogin = @NewLogin
+		WHERE Orders.ClientLogin = @UserLogin;
         UPDATE Users SET
-            UserLogin = @UserLogin,
+            UserLogin = @NewLogin,
             Pass = @Pass,
             Email = @Email,
             PhoneNumber = @PhoneNumber
