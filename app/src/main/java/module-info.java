@@ -1,5 +1,3 @@
-import com.example.app.utils.DatabaseConnection;
-
 module com.example.app {
     requires javafx.controls;
     requires javafx.fxml;
