@@ -13,15 +13,7 @@ public class UserService {
         userRepository = new UserRepository();
     }
 
-    public void getUsers() {
-        try {
-            List<User> users = userRepository.getUsers();
-
-            for (User user : users) {
-                System.out.println(user);
-            }
-        } catch (SQLException exception) {
-            System.err.println(exception.getMessage());
-        }
+    public List<User> getUsers() throws SQLException {
+        return userRepository.getUsers();
     }
 }

@@ -9,18 +9,14 @@ import java.io.IOException;
 
 public class CarServiceApplication extends Application {
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("auth-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 540, 330);
-        primaryStage.setTitle("Авторизация");
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Авторизация");
+        stage.setResizable(false);
 
-        primaryStage.setMinWidth(320);
-        primaryStage.setMinHeight(280);
-        primaryStage.setMaxWidth(540);
-        primaryStage.setMaxHeight(330);
-
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static void main(String[] args) {

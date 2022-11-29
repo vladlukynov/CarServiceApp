@@ -13,16 +13,7 @@ public class ClientService {
         clientRepository = new ClientRepository();
     }
 
-    public void getClientsInfo() {
-        try {
-            List<Client> clients;
-            clients = clientRepository.getClientsInfo();
-
-            for (Client client : clients) {
-                System.out.println(client);
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
+    public List<Client> getClientsInfo() throws SQLException {
+        return clientRepository.getClientsInfo();
     }
 }
