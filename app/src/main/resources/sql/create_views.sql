@@ -17,7 +17,7 @@ GO
 GO
 CREATE VIEW GetClientsInfo
 AS
-    SELECT Users.UserLogin, FirstName, LastName, MiddleName, Birthday FROM Clients
+    SELECT Users.UserLogin, Pass, Email, PhoneNumber, RoleId, IsActive, FirstName, LastName, MiddleName, Birthday FROM Clients
         JOIN Users ON Clients.UserLogin = Users.UserLogin;
 GO
 
@@ -25,7 +25,7 @@ GO
 GO
 CREATE VIEW GetEmployeesInfo
 AS
-    SELECT Users.UserLogin, FirstName, LastName, MiddleName, Post, Salary, Birthday FROM Employees
+    SELECT Users.UserLogin, Pass, Email, PhoneNumber, RoleId, IsActive, FirstName, LastName, MiddleName, Post, Salary, Birthday FROM Employees
         JOIN Users ON Employees.UserLogin = Users.UserLogin;
 GO
 
