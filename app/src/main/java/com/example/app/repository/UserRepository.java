@@ -13,9 +13,9 @@ public class UserRepository {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("""
-                     SELECT UserLogin, Pass, Email, PhoneNumber FROM GetEmployeesInfo
+                     SELECT UserLogin, Pass, Email, PhoneNumber, RoleId FROM GetEmployeesInfo
                      UNION
-                     SELECT UserLogin, Pass, Email, PhoneNumber FROM GetClientsInfo
+                     SELECT UserLogin, Pass, Email, PhoneNumber, RoleId FROM GetClientsInfo
                      """)) {
             List<User> list = new ArrayList<>();
 

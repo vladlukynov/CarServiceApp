@@ -1,4 +1,4 @@
-package com.example.app.view.controllers;
+package com.example.app.view.controllers.auth;
 
 import com.example.app.CarServiceApplication;
 import com.example.app.entity.User;
@@ -28,7 +28,7 @@ public class AuthController {
         String login = loginField.getText().trim();
         String pass = passField.getText();
 
-        if (login.isBlank() || pass.isBlank()) {
+        if (login.isBlank() || pass.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Все поля должны быть заполнены!", ButtonType.OK);
             alert.show();
             return;
@@ -45,8 +45,18 @@ public class AuthController {
             CarServiceApplication.setUser(user);
 
             switch (user.getRoleId()) {
-                case 1:
-                    changeScene("admin/admin-view.fxml", "Главная страница", event);
+                case 1 -> {
+                    swapStage("admin/admin-view.fxml", "Администратор");
+                    getStage(event).close();
+                }
+                case 2 -> {
+                    swapStage("employee/employee-view.fxml", "Сотрудник");
+                    getStage(event).close();
+                }
+                case 3 -> {
+                    swapStage("client/client-view.fxml", "Клиент");
+                    getStage(event).close();
+                }
             }
 
         } catch (NoUserByLoginException exception) {
@@ -56,7 +66,6 @@ public class AuthController {
             Alert alert = new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK);
             alert.show();
         }
-
     }
 
     @FXML

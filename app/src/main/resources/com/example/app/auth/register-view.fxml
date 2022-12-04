@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="350.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.view.controllers.RegisterController">
+<AnchorPane prefHeight="350.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.view.controllers.auth.RegisterController">
    <children>
       <VBox alignment="CENTER" fillWidth="false" layoutX="82.0" layoutY="31.0" spacing="20.0">
          <Label alignment="CENTER" text="Регистрация" textAlignment="CENTER">

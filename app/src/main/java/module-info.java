@@ -4,9 +4,10 @@ module com.example.app {
     requires java.sql;
 
     opens com.example.app to javafx.fxml;
-    opens com.example.app.view.controllers to javafx.fxml;
+    opens com.example.app.view.controllers.auth to javafx.fxml;
 
     exports com.example.app;
-    exports com.example.app.view.controllers;
+    // exports com.example.app.view.controllers;
     exports com.example.app.entity;
+    exports com.example.app.view.controllers.auth;
 }

@@ -1,4 +1,4 @@
-package com.example.app.view.controllers;
+package com.example.app.view.controllers.auth;
 
 import com.example.app.entity.Client;
 import com.example.app.entity.User;
@@ -44,7 +44,7 @@ public class RegisterController {
         String phoneNumber = phoneField.getText().trim();
         LocalDate birthday = dateField.getValue();
 
-        if (login.isBlank() || pass.isBlank() || name.length != 3 || email.isBlank() ||
+        if (login.isBlank() || pass.isEmpty() || name.length != 3 || email.isBlank() ||
                 phoneNumber.isBlank() || birthday == null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Все поля должны быть заполнены!", ButtonType.OK);
             alert.show();
