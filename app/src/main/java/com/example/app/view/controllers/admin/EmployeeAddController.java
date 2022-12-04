@@ -12,10 +12,9 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 
-public class EmployeeEditController {
-    private Employee employee;
-    private EmployeesBlockController employeesBlockController;
+public class EmployeeAddController {
     private final EmployeeService employeeService = new EmployeeService();
+    private AdminController adminController;
     @FXML
     private TextField loginLabel;
     @FXML
@@ -40,28 +39,13 @@ public class EmployeeEditController {
         roleLabel.getItems().addAll("Администратор", "Сотрудник");
     }
 
-    public void setInfo(Employee employee_, EmployeesBlockController controller) {
-        employee = employee_;
-        employeesBlockController = controller;
-
-        loginLabel.setText(employee_.getUserLogin());
-        passLabel.setText(employee_.getPass());
-        nameLabel.setText(employee_.getLastName() + " " + employee_.getFirstName() + " " + employee_.getMiddleName());
-        emailLabel.setText(employee_.getEmail());
-        phoneLabel.setText(employee_.getPhoneNumber());
-        roleLabel.getSelectionModel().select(employee_.getRoleId() - 1);
-        postLabel.setText(employee_.getPost());
-        salaryLabel.setText(Double.toString(employee_.getSalary()));
-        birthdayLabel.setValue(employee_.getBirthday());
-    }
-
     @FXML
     public void onCloseButtonClick(ActionEvent event) {
         UIActions.getStage(event).close();
     }
 
     @FXML
-    public void onApplyButtonClick(ActionEvent event) {
+    public void onRegButtonClick(ActionEvent event) {
         String login = loginLabel.getText().trim();
         String pass = passLabel.getText();
         String[] name = nameLabel.getText().trim().split(" ");
@@ -87,7 +71,7 @@ public class EmployeeEditController {
         }
 
         if (login.isBlank() || pass.isEmpty() || name.length != 3 || email.isBlank() ||
-                phoneNumber.isBlank() || post.isBlank() || birthday == null) {
+                phoneNumber.isBlank() || roleId == 0 || post.isBlank() || birthday == null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Все поля должны быть заполнены!", ButtonType.OK);
             alert.show();
             return;
@@ -101,27 +85,32 @@ public class EmployeeEditController {
 
         try {
             List<Employee> employees = employeeService.getEmployeesInfo();
-            if (employees.stream().anyMatch(item -> item.getUserLogin().equals(login) && !item.getUserLogin().equals(employee.getUserLogin()))) {
+            if (employees.stream().anyMatch(item -> item.getUserLogin().equals(login))) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Логин занят. Используйте другой!", ButtonType.OK);
                 alert.show();
                 return;
             }
 
-            if (employees.stream().anyMatch(item -> item.getEmail().equals(email) && !item.getEmail().equals(employee.getEmail())) ||
-                    employees.stream().anyMatch(item -> item.getPhoneNumber().equals(phoneNumber) && !item.getPhoneNumber().equals(employee.getPhoneNumber()))) {
+            if (employees.stream().anyMatch(item -> item.getEmail().equals(email)) ||
+                    employees.stream().anyMatch(item -> item.getPhoneNumber().equals(phoneNumber))) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Почта или телефон уже используются в системе!", ButtonType.OK);
                 alert.show();
             }
 
-            Employee newEmployee = new Employee(login, pass, email, phoneNumber, roleId, employee.isActive(),
+            Employee employee = new Employee(login, pass, email, phoneNumber, roleId, true,
                     name[1], name[0], name[2], post, salary, birthday);
-            employeeService.updateEmployee(employee.getUserLogin(), newEmployee);
-            employeesBlockController.setInfo(newEmployee);
 
+            employeeService.registerEmployee(employee);
+
+            adminController.onEmployeesButtonClick();
             UIActions.getStage(event).close();
         } catch (SQLException exception) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK);
             alert.show();
         }
+    }
+
+    public void setInfo(AdminController controller) {
+        adminController = controller;
     }
 }

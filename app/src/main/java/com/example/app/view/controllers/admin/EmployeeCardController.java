@@ -22,6 +22,8 @@ public class EmployeeCardController {
     @FXML
     private Label roleLabel;
     @FXML
+    private Label isActiveLabel;
+    @FXML
     private Label postLabel;
     @FXML
     private Label salaryLabel;
@@ -34,6 +36,7 @@ public class EmployeeCardController {
         emailLabel.setText("Электронная почта: " + employee_.getEmail());
         phoneLabel.setText("Телефон: " + employee_.getPhoneNumber());
         roleLabel.setText("Роль в системе: " + Roles.getRoleName(employee_.getRoleId()));
+        isActiveLabel.setText("Состояние аккаунта: " + (employee_.isActive() ? "активен" : "деактивирован"));
         postLabel.setText("Должность: " + employee_.getPost());
         salaryLabel.setText("Зарплата: " + employee_.getSalary());
         birthdayLabel.setText("Дата рождения: " + employee_.getBirthday().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));

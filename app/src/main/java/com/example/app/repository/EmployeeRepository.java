@@ -57,4 +57,21 @@ public class EmployeeRepository {
                     newEmployee.getBirthday() + "'");
         }
     }
+
+    public void registerEmployee(Employee employee) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password);
+             Statement statement = connection.createStatement()) {
+            statement.execute("EXEC RegisterEmployee '" + employee.getUserLogin() + "','" +
+                    employee.getPass() + "','" +
+                    employee.getEmail() + "','" +
+                    employee.getPhoneNumber() + "'," +
+                    employee.getRoleId() + ",'" +
+                    employee.getFirstName() + "','" +
+                    employee.getLastName() + "','" +
+                    employee.getMiddleName() + "','" +
+                    employee.getPost() + "'," +
+                    employee.getSalary() + ",'" +
+                    employee.getBirthday() + "'");
+        }
+    }
 }

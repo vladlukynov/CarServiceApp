@@ -216,6 +216,7 @@ CREATE PROCEDURE RegisterEmployee
     @Pass VARCHAR(32),
     @Email VARCHAR(30),
     @PhoneNumber VARCHAR(15),
+    @RoleId INT,
     @FirstName NVARCHAR(20),
     @LastName NVARCHAR(20),
     @MiddleName NVARCHAR(20),
@@ -226,7 +227,7 @@ AS
     SET XACT_ABORT ON;
     BEGIN TRANSACTION;
         INSERT INTO Users (UserLogin, Pass, Email, PhoneNumber, RoleId)
-            VALUES (@UserLogin, @Pass, @Email, @PhoneNumber, 2);
+            VALUES (@UserLogin, @Pass, @Email, @PhoneNumber, @RoleId);
         INSERT INTO Employees (UserLogin, FirstName, LastName, MiddleName, Post, Salary, Birthday)
             VALUES (@UserLogin, @FirstName, @LastName, @MiddleName, @Post, @Salary, @Birthday);
     COMMIT;

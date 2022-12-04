@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.view.controllers.admin.AdminController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="740.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.view.controllers.admin.AdminController">
    <children>
       <VBox alignment="TOP_RIGHT" layoutX="476.0" layoutY="14.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <children>
@@ -30,7 +30,7 @@
             <Insets />
          </opaqueInsets>
       </VBox>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onEmployeesButtonClick" text="Сотрудники" />
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onEmployeesButtonClick" text="Сотрудники" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
       <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="10.0" layoutY="100.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="100.0">
          <content>
             <VBox fx:id="primaryLayout" alignment="TOP_CENTER" spacing="10.0">
@@ -40,5 +40,9 @@
             </VBox>
          </content>
       </ScrollPane>
+      <Button layoutX="118.0" layoutY="16.0" mnemonicParsing="false" text="Автомобили" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="10.0" />
+      <Button layoutX="230.0" layoutY="16.0" mnemonicParsing="false" text="Услуги" AnchorPane.leftAnchor="192.0" AnchorPane.topAnchor="10.0" />
+      <Button layoutX="308.0" layoutY="16.0" mnemonicParsing="false" text="Детали" AnchorPane.leftAnchor="253.0" AnchorPane.topAnchor="10.0" />
+      <Button layoutX="316.0" layoutY="10.0" mnemonicParsing="false" text="Заказы" AnchorPane.leftAnchor="316.0" AnchorPane.topAnchor="10.0" />
    </children>
 </AnchorPane>

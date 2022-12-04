@@ -29,4 +29,8 @@ public class EmployeeService {
     public void updateEmployee(String userLogin, Employee newEmployee) throws SQLException {
         employeeRepository.updateEmployee(userLogin, newEmployee);
     }
+
+    public void registerEmployee(Employee employee) throws SQLException {
+        employeeRepository.registerEmployee(employee);
+    }
 }

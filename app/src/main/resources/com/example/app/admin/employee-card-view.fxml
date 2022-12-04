@@ -40,6 +40,11 @@
                   <Font size="17.0" />
                </font>
             </Label>
+            <Label fx:id="isActiveLabel" text="Аккаунт: активен">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
             <Label fx:id="postLabel" text="Должность: механик">
                <font>
                   <Font size="17.0" />
