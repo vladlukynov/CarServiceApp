@@ -25,4 +25,8 @@ public class EmployeeService {
 
         throw new NoEmployeeByLoginException("No employee with " + userLogin + " login");
     }
+
+    public void updateEmployee(String userLogin, Employee newEmployee) throws SQLException {
+        employeeRepository.updateEmployee(userLogin, newEmployee);
+    }
 }

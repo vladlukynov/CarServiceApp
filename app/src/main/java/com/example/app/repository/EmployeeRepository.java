@@ -39,4 +39,22 @@ public class EmployeeRepository {
             return list;
         }
     }
+
+    public void updateEmployee(String userLogin, Employee newEmployee) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password);
+             Statement statement = connection.createStatement()) {
+            statement.execute("EXEC EditEmployee '" + userLogin + "','" +
+                    newEmployee.getUserLogin() + "','" +
+                    newEmployee.getPass() + "','" +
+                    newEmployee.getEmail() + "','" +
+                    newEmployee.getPhoneNumber() + "'," +
+                    newEmployee.getRoleId() + ",'" +
+                    newEmployee.getFirstName() + "','" +
+                    newEmployee.getLastName() + "','" +
+                    newEmployee.getMiddleName() + "','" +
+                    newEmployee.getPost() + "'," +
+                    newEmployee.getSalary() + ",'" +
+                    newEmployee.getBirthday() + "'");
+        }
+    }
 }

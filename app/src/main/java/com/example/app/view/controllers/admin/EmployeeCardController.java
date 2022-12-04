@@ -8,6 +8,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
+import java.time.format.DateTimeFormatter;
+
 public class EmployeeCardController {
     @FXML
     private Label loginLabel;
@@ -34,7 +36,7 @@ public class EmployeeCardController {
         roleLabel.setText("Роль в системе: " + Roles.getRoleName(employee_.getRoleId()));
         postLabel.setText("Должность: " + employee_.getPost());
         salaryLabel.setText("Зарплата: " + employee_.getSalary());
-        birthdayLabel.setText("Дата рождения: " + employee_.getBirthday());
+        birthdayLabel.setText("Дата рождения: " + employee_.getBirthday().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
     }
 
     @FXML

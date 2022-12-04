@@ -65,7 +65,20 @@ public class EmployeesBlockController {
 
     @FXML
     public void onEditButtonClick() {
-
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("admin/edit-employee-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            EmployeeEditController controller = fxmlLoader.getController();
+            controller.setInfo(employee, this);
+            Stage stage = new Stage();
+            stage.setTitle("Редактирование");
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException exception) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK);
+            alert.show();
+        }
     }
 
     @FXML
