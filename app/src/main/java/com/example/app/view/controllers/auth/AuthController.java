@@ -45,18 +45,9 @@ public class AuthController {
             CarServiceApplication.setUser(user);
 
             switch (user.getRoleId()) {
-                case 1 -> {
-                    swapStage("admin/admin-view.fxml", "Администратор");
-                    getStage(event).close();
-                }
-                case 2 -> {
-                    swapStage("employee/employee-view.fxml", "Сотрудник");
-                    getStage(event).close();
-                }
-                case 3 -> {
-                    swapStage("client/client-view.fxml", "Клиент");
-                    getStage(event).close();
-                }
+                case 1 -> swapStage("admin/admin-view.fxml", "Администратор", getStage(event));
+                case 2 -> swapStage("employee/employee-view.fxml", "Сотрудник", getStage(event));
+                case 3 -> swapStage("client/client-view.fxml", "Клиент", getStage(event));
             }
 
         } catch (NoUserByLoginException exception) {
@@ -70,6 +61,6 @@ public class AuthController {
 
     @FXML
     protected void onRegButtonClick(ActionEvent event) throws IOException {
-        changeScene("auth/register-view.fxml", "Регистрация", event);
+        changeScene("auth/register-view.fxml", "Регистрация", getStage(event));
     }
 }

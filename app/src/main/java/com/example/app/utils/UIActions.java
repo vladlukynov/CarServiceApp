@@ -15,24 +15,24 @@ public class UIActions {
     }
 
     public static void changeScene(String view, String title,
-                                   ActionEvent event) throws IOException {
+                                   Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource(view));
 
-        Stage primaryStage = getStage(event);
         Scene scene = new Scene(fxmlLoader.load());
 
-        primaryStage.setTitle(title);
-        primaryStage.setScene(scene);
+        stage.setTitle(title);
+        stage.setScene(scene);
     }
 
-    public static void swapStage(String view, String title) throws IOException {
-        Stage stage = new Stage();
+    public static void swapStage(String view, String title, Stage oldStage) throws IOException {
+        Stage newStage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource(view));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle(title);
-        stage.setResizable(false);
+        newStage.setTitle(title);
+        newStage.setResizable(false);
+        newStage.setScene(scene);
 
-        stage.setScene(scene);
-        stage.show();
+        oldStage.close();
+        newStage.show();
     }
 }

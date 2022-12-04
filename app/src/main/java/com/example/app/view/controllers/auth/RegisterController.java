@@ -74,7 +74,7 @@ public class RegisterController {
             Client client = new Client(login, pass, email, phoneNumber, name[1], name[0], name[2], birthday);
 
             clientService.registrateClient(client);
-            changeScene("auth/auth-view.fxml", "Авторизация", event);
+            changeScene("auth/auth-view.fxml", "Авторизация", getStage(event));
         } catch (SQLException | IOException exception) {
             Alert alert = new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK);
             alert.show();
@@ -83,6 +83,6 @@ public class RegisterController {
 
     @FXML
     protected void onBackButtonClick(ActionEvent event) throws IOException {
-        changeScene("auth/auth-view.fxml", "Авторизация", event);
+        changeScene("auth/auth-view.fxml", "Авторизация", getStage(event));
     }
 }
