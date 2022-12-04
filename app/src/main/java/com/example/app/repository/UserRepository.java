@@ -13,9 +13,9 @@ public class UserRepository {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("""
-                     SELECT UserLogin, Pass, Email, PhoneNumber, RoleId FROM GetEmployeesInfo
+                     SELECT UserLogin, Pass, Email, PhoneNumber, RoleId, IsActive FROM GetEmployeesInfo
                      UNION
-                     SELECT UserLogin, Pass, Email, PhoneNumber, RoleId FROM GetClientsInfo
+                     SELECT UserLogin, Pass, Email, PhoneNumber, RoleId, IsActive FROM GetClientsInfo
                      """)) {
             List<User> list = new ArrayList<>();
 
@@ -25,7 +25,9 @@ public class UserRepository {
                 String email = resultSet.getString("Email");
                 String phoneNumber = resultSet.getString("PhoneNumber");
                 int roleId = resultSet.getInt("RoleId");
-                User user = new User(userLogin, pass, email, phoneNumber, roleId);
+                boolean isActive = resultSet.getBoolean("IsActive");
+                User user = new User(userLogin, pass, email, phoneNumber, roleId, isActive);
+
                 list.add(user);
             }
 

@@ -6,16 +6,18 @@ public class User {
     private String email;
     private String phoneNumber;
     private int roleId;
+    private boolean isActive;
 
     public User() {
     }
 
-    public User(String userLogin, String pass, String email, String phoneNumber, int roleId) {
+    public User(String userLogin, String pass, String email, String phoneNumber, int roleId, boolean isActive) {
         this.userLogin = userLogin;
         this.pass = pass;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.roleId = roleId;
+        this.isActive = isActive;
     }
 
     public String getUserLogin() {
@@ -38,6 +40,10 @@ public class User {
         return roleId;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -45,6 +51,8 @@ public class User {
                 ", pass='" + pass + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
+                ", roleId=" + roleId +
+                ", isActive=" + isActive +
                 '}';
     }
 }

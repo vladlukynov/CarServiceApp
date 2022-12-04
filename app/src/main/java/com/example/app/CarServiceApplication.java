@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class CarServiceApplication extends Application {
-    private static User user = new User();
+    private static User user;
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("auth/auth-view.fxml"));

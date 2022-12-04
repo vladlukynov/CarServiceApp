@@ -2,13 +2,7 @@ package com.example.app.entity;
 
 import java.time.LocalDate;
 
-public class Employee {
-    private final String userLogin;
-    private final String pass;
-    private final String email;
-    private final String phoneNumber;
-    private final int roleId;
-    private final boolean isActive;
+public class Employee extends User {
     private final String firstName;
     private final String lastName;
     private final String middleName;
@@ -19,12 +13,7 @@ public class Employee {
     public Employee(String userLogin, String pass, String email, String phoneNumber, int roleId,
                     boolean isActive, String firstName, String lastName, String middleName,
                     String post, double salary, LocalDate birthday) {
-        this.userLogin = userLogin;
-        this.pass = pass;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.roleId = roleId;
-        this.isActive = isActive;
+        super(userLogin, pass, email, phoneNumber, roleId, isActive);
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;
@@ -33,15 +22,39 @@ public class Employee {
         this.birthday = birthday;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public String getPost() {
+        return post;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
-                "userLogin='" + userLogin + '\'' +
-                ", pass='" + pass + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", roleId=" + roleId +
-                ", isActive=" + isActive +
+                "userLogin='" + super.getUserLogin() + '\'' +
+                ", pass='" + super.getPass() + '\'' +
+                ", email='" + super.getEmail() + '\'' +
+                ", phoneNumber='" + super.getPhoneNumber() + '\'' +
+                ", roleId=" + super.getRoleId() +
+                ", isActive=" + super.isActive() +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", middleName='" + middleName + '\'' +

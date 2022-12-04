@@ -73,7 +73,7 @@ public class RegisterController {
 
             Client client = new Client(login, pass, email, phoneNumber, name[1], name[0], name[2], birthday);
 
-            clientService.registrateClient(client);
+            clientService.registerClient(client);
             changeScene("auth/auth-view.fxml", "Авторизация", getStage(event));
         } catch (SQLException | IOException exception) {
             Alert alert = new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK);

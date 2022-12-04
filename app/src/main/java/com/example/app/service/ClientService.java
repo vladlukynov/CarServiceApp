@@ -7,17 +7,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ClientService {
-    private final ClientRepository clientRepository;
-
-    public ClientService() {
-        clientRepository = new ClientRepository();
-    }
+    private final ClientRepository clientRepository = new ClientRepository();
 
     public List<Client> getClientsInfo() throws SQLException {
         return clientRepository.getClientsInfo();
     }
 
-    public void registrateClient(Client client) throws SQLException {
+    public void registerClient(Client client) throws SQLException {
         clientRepository.registerClient(client);
     }
 }

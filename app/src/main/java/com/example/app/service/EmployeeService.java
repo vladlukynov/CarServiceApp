@@ -7,11 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class EmployeeService {
-    private final EmployeeRepository employeeRepository;
-
-    public EmployeeService() {
-        employeeRepository = new EmployeeRepository();
-    }
+    private final EmployeeRepository employeeRepository = new EmployeeRepository();
 
     public void getEmployeesInfo() {
         try {
