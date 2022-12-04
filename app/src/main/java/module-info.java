@@ -8,4 +8,5 @@ module com.example.app {
 
     exports com.example.app;
     exports com.example.app.view.controllers;
+    exports com.example.app.entity;
 }

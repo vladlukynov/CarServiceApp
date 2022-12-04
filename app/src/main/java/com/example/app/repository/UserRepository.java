@@ -24,7 +24,8 @@ public class UserRepository {
                 String pass = resultSet.getString("Pass");
                 String email = resultSet.getString("Email");
                 String phoneNumber = resultSet.getString("PhoneNumber");
-                User user = new User(userLogin, pass, email, phoneNumber);
+                int roleId = resultSet.getInt("RoleId");
+                User user = new User(userLogin, pass, email, phoneNumber, roleId);
                 list.add(user);
             }
 

@@ -1,6 +1,6 @@
 package com.example.app.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Employee {
     private final String userLogin;
@@ -14,11 +14,11 @@ public class Employee {
     private final String middleName;
     private final String post;
     private final double salary;
-    private final Date birthday;
+    private final LocalDate birthday;
 
     public Employee(String userLogin, String pass, String email, String phoneNumber, int roleId,
                     boolean isActive, String firstName, String lastName, String middleName,
-                    String post, double salary, Date birthday) {
+                    String post, double salary, LocalDate birthday) {
         this.userLogin = userLogin;
         this.pass = pass;
         this.email = email;

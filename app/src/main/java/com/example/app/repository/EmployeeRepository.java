@@ -5,8 +5,8 @@ import com.example.app.entity.Employee;
 import static com.example.app.utils.DatabaseAuth.*;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class EmployeeRepository {
@@ -27,7 +27,8 @@ public class EmployeeRepository {
                 String middleName = resultSet.getString("MiddleName");
                 String post = resultSet.getString("Post");
                 double salary = resultSet.getDouble("Salary");
-                Date birthday = resultSet.getDate("Birthday");
+                LocalDate birthday = resultSet.getDate("Birthday")
+                        .toLocalDate();
 
                 Employee employee = new Employee(userLogin, pass, email, phoneNumber, roleId, isActive,
                         firstName, lastName, middleName, post, salary, birthday);

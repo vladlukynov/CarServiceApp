@@ -1,6 +1,8 @@
 package com.example.app.view.controllers;
 
+import com.example.app.entity.Client;
 import com.example.app.entity.User;
+import com.example.app.service.ClientService;
 import com.example.app.service.UserService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +16,7 @@ import static com.example.app.utils.UIActions.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 public class RegisterController {
@@ -30,6 +33,7 @@ public class RegisterController {
     @FXML
     private DatePicker dateField;
     private final UserService userService = new UserService();
+    private final ClientService clientService = new ClientService();
 
     @FXML
     protected void onRegButtonClick(ActionEvent event) {
@@ -41,8 +45,14 @@ public class RegisterController {
         LocalDate birthday = dateField.getValue();
 
         if (login.isBlank() || pass.isBlank() || name.length != 3 || email.isBlank() ||
-        phoneNumber.isBlank() || birthday == null) {
+                phoneNumber.isBlank() || birthday == null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Все поля должны быть заполнены!", ButtonType.OK);
+            alert.show();
+            return;
+        }
+
+        if (Period.between(birthday, LocalDate.now()).getYears() < 18) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Только совершеннолетние пользователи могут зарегистрироваться!", ButtonType.OK);
             alert.show();
             return;
         }
@@ -60,7 +70,12 @@ public class RegisterController {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Почта или телефон уже используются в системе!", ButtonType.OK);
                 alert.show();
             }
-        } catch (SQLException exception) {
+
+            Client client = new Client(login, pass, email, phoneNumber, name[1], name[0], name[2], birthday);
+
+            clientService.registrateClient(client);
+            changeScene("auth/auth-view.fxml", "Авторизация", event);
+        } catch (SQLException | IOException exception) {
             Alert alert = new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK);
             alert.show();
         }
@@ -68,6 +83,6 @@ public class RegisterController {
 
     @FXML
     protected void onBackButtonClick(ActionEvent event) throws IOException {
-        changeScene("auth-view.fxml", "Авторизация", event);
+        changeScene("auth/auth-view.fxml", "Авторизация", event);
     }
 }

@@ -3,8 +3,8 @@ package com.example.app.repository;
 import com.example.app.entity.Client;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static com.example.app.utils.DatabaseAuth.*;
@@ -25,7 +25,8 @@ public class ClientRepository {
                 String firstName = resultSet.getString("FirstName");
                 String lastName = resultSet.getString("LastName");
                 String middleName = resultSet.getString("MiddleName");
-                Date birthday = resultSet.getDate("Birthday");
+                LocalDate birthday = resultSet.getDate("Birthday")
+                        .toLocalDate();
 
                 Client client = new Client(userLogin, pass, email, phoneNumber, roleId, isActive,
                         firstName, lastName, middleName, birthday);
@@ -34,6 +35,22 @@ public class ClientRepository {
             }
 
             return list;
+        }
+    }
+
+    public void registerClient(Client client) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password);
+             Statement statement = connection.createStatement()) {
+            String query = "EXEC RegisterClient '" + client.getUserLogin() + "', " +
+                    "'" + client.getPass() + "', " +
+                    "'" + client.getEmail() + "', " +
+                    "'" + client.getPhoneNumber() + "', " +
+                    "'" + client.getFirstName() + "', " +
+                    "'" + client.getLastName() + "', " +
+                    "'" + client.getMiddleName() + "', " +
+                    "'" + client.getBirthday() + "'";
+
+            statement.execute(query);
         }
     }
 }

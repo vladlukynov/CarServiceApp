@@ -16,4 +16,8 @@ public class ClientService {
     public List<Client> getClientsInfo() throws SQLException {
         return clientRepository.getClientsInfo();
     }
+
+    public void registrateClient(Client client) throws SQLException {
+        clientRepository.registerClient(client);
+    }
 }

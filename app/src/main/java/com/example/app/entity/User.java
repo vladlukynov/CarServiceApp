@@ -1,20 +1,29 @@
 package com.example.app.entity;
 
 public class User {
-    private final String userLogin;
-    private final String pass;
-    private final String email;
-    private final String phoneNumber;
+    private String userLogin;
+    private String pass;
+    private String email;
+    private String phoneNumber;
+    private int roleId;
 
-    public User(String userLogin, String pass, String email, String phoneNumber) {
+    public User() {
+    }
+
+    public User(String userLogin, String pass, String email, String phoneNumber, int roleId) {
         this.userLogin = userLogin;
         this.pass = pass;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.roleId = roleId;
     }
 
     public String getUserLogin() {
         return userLogin;
+    }
+
+    public String getPass() {
+        return pass;
     }
 
     public String getEmail() {
@@ -23,6 +32,10 @@ public class User {
 
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public int getRoleId() {
+        return roleId;
     }
 
     @Override
