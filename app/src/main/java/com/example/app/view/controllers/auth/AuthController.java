@@ -42,6 +42,12 @@ public class AuthController {
                 return;
             }
 
+            if (!user.isActive()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Аккаунт не активен в системе!", ButtonType.OK);
+                alert.show();
+                return;
+            }
+
             CarServiceApplication.setUser(user);
 
             switch (user.getRoleId()) {

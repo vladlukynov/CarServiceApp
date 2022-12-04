@@ -36,4 +36,12 @@ public class UserService {
 
         throw new NoUserByLoginException("No user with " + userLogin + " login");
     }
+
+    public void activateUser(String userLogin) throws SQLException {
+        userRepository.activateUser(userLogin);
+    }
+
+    public void deactivateUser(String userLogin) throws SQLException {
+        userRepository.deactivateUser(userLogin);
+    }
 }

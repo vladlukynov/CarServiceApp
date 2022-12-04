@@ -34,4 +34,18 @@ public class UserRepository {
             return list;
         }
     }
+
+    public void activateUser(String userLogin) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password);
+             Statement statement = connection.createStatement()) {
+            statement.execute("EXEC ChangeUserStatus '" + userLogin + "'," + 1);
+        }
+    }
+
+    public void deactivateUser(String userLogin) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password);
+             Statement statement = connection.createStatement()) {
+            statement.execute("EXEC ChangeUserStatus '" + userLogin + "'," + 0);
+        }
+    }
 }

@@ -11,4 +11,5 @@ module com.example.app {
     exports com.example.app.entity;
     exports com.example.app.view.controllers.auth;
     exports com.example.app.view.controllers.admin;
+    exports com.example.app.exception;
 }
