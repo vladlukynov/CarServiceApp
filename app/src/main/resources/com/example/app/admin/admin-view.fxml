@@ -40,9 +40,9 @@
             </VBox>
          </content>
       </ScrollPane>
-      <Button layoutX="118.0" layoutY="16.0" mnemonicParsing="false" text="Автомобили" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="10.0" />
-      <Button layoutX="230.0" layoutY="16.0" mnemonicParsing="false" text="Услуги" AnchorPane.leftAnchor="192.0" AnchorPane.topAnchor="10.0" />
-      <Button layoutX="308.0" layoutY="16.0" mnemonicParsing="false" text="Детали" AnchorPane.leftAnchor="253.0" AnchorPane.topAnchor="10.0" />
-      <Button layoutX="316.0" layoutY="10.0" mnemonicParsing="false" text="Заказы" AnchorPane.leftAnchor="316.0" AnchorPane.topAnchor="10.0" />
+      <Button layoutX="118.0" layoutY="16.0" mnemonicParsing="false" onAction="#onCarsButtonClick" text="Автомобили" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="10.0" />
+      <Button layoutX="230.0" layoutY="16.0" mnemonicParsing="false" onAction="#onServicesButtonClick" text="Услуги" AnchorPane.leftAnchor="192.0" AnchorPane.topAnchor="10.0" />
+      <Button layoutX="308.0" layoutY="16.0" mnemonicParsing="false" onAction="#onDetailsButtonClick" text="Детали" AnchorPane.leftAnchor="253.0" AnchorPane.topAnchor="10.0" />
+      <Button layoutX="316.0" layoutY="10.0" mnemonicParsing="false" onAction="#onOrdersButtonClick" text="Заказы" AnchorPane.leftAnchor="316.0" AnchorPane.topAnchor="10.0" />
    </children>
 </AnchorPane>

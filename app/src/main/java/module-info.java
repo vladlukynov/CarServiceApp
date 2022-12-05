@@ -6,10 +6,14 @@ module com.example.app {
     opens com.example.app to javafx.fxml;
     opens com.example.app.view.controllers.auth to javafx.fxml;
     opens com.example.app.view.controllers.admin to javafx.fxml;
+    opens com.example.app.view.controllers.admin.employees to javafx.fxml;
+    opens com.example.app.view.controllers.admin.cars to javafx.fxml;
 
     exports com.example.app;
     exports com.example.app.entity;
     exports com.example.app.view.controllers.auth;
     exports com.example.app.view.controllers.admin;
     exports com.example.app.exception;
+    exports com.example.app.view.controllers.admin.employees;
+    exports com.example.app.view.controllers.admin.cars;
 }

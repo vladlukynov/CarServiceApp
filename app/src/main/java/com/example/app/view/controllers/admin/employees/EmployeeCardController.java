@@ -1,4 +1,4 @@
-package com.example.app.view.controllers.admin;
+package com.example.app.view.controllers.admin.employees;
 
 import com.example.app.entity.Employee;
 import com.example.app.exception.NoRoleByIdException;

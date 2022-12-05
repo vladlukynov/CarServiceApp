@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="468.0" spacing="5.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.view.controllers.admin.EmployeeEditController">
+<VBox alignment="TOP_CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="468.0" spacing="5.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.view.controllers.admin.employees.EmployeeAddController">
    <children>
-      <Label text="Редактирование информации о сотруднике" textAlignment="CENTER" wrapText="true">
+      <Label text="Регистрация сотрудника" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -42,7 +42,7 @@
       <HBox alignment="TOP_CENTER" spacing="50.0">
          <children>
             <Button mnemonicParsing="false" onAction="#onCloseButtonClick" text="Закрыть" />
-            <Button mnemonicParsing="false" onAction="#onApplyButtonClick" text="Применить" />
+            <Button mnemonicParsing="false" onAction="#onRegButtonClick" text="Регистрация" />
          </children>
          <padding>
             <Insets top="10.0" />

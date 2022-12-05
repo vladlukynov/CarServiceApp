@@ -1,4 +1,4 @@
-package com.example.app.view.controllers.admin;
+package com.example.app.view.controllers.admin.employees;
 
 import com.example.app.CarServiceApplication;
 import com.example.app.entity.Employee;
@@ -34,11 +34,7 @@ public class EmployeesBlockController {
         name.setText(employee.getLastName() + " " + employee.getFirstName() + " " + employee.getMiddleName());
         post.setText(employee.getPost());
 
-        if (employee.isActive()) {
-            isActiveButton.setText("Деактивация");
-        } else {
-            isActiveButton.setText("Активация");
-        }
+        isActiveButton.setText(employee.isActive() ? "Деактивация" : "Активация");
     }
 
     @FXML
@@ -66,7 +62,7 @@ public class EmployeesBlockController {
     @FXML
     public void onEditButtonClick() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("admin/edit-employee-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("admin/employees/edit-employee-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             EmployeeEditController controller = fxmlLoader.getController();
             controller.setInfo(employee, this);
@@ -84,7 +80,7 @@ public class EmployeesBlockController {
     @FXML
     public void onInfoButtonClick() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("admin/employee-card-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("admin/employees/employee-card-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             EmployeeCardController controller = fxmlLoader.getController();
             controller.setInfo(employee);
