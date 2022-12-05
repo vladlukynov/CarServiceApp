@@ -11,10 +11,12 @@ import com.example.app.view.controllers.client.services.ServiceBlockController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -81,6 +83,16 @@ public class ClientController {
 
     @FXML
     public void addOrderButtonClick() {
-
+        try{
+        FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("client/add-order-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setTitle("Запись на обслуживание");
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
+    } catch (IOException exception) {
+            new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
+        }
     }
 }

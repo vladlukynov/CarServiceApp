@@ -40,4 +40,8 @@ public class OrderService {
        }
        return result;
     }
+
+    public void addOrder(int carId, String carNumber, String clientLogin) throws SQLException {
+        orderRepository.addOrder(carId, carNumber, clientLogin);
+    }
 }

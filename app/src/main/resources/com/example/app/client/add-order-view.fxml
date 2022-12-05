@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="642.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="196.0" prefWidth="366.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.view.controllers.client.AddOrderController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="137.0" layoutY="25.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <VBox alignment="TOP_CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <children>
             <Label text="Запись на обслуживание">
                <font>
@@ -17,5 +20,17 @@
             </Label>
          </children>
       </VBox>
+      <VBox alignment="TOP_CENTER" layoutX="66.0" layoutY="62.0" prefHeight="71.0" prefWidth="234.0" spacing="20.0">
+         <children>
+            <ComboBox fx:id="carLabel" maxWidth="1.7976931348623157E308" promptText="Автомобиль" />
+            <TextField fx:id="carNumberLabel" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="140.0" promptText="Гос. номер" />
+         </children>
+      </VBox>
+      <HBox alignment="TOP_CENTER" spacing="50.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onCancelButtonClick" text="Отменить" />
+            <Button mnemonicParsing="false" onAction="#onApplyButtonClick" text="Применить" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>
