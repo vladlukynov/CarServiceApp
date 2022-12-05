@@ -1,20 +1,16 @@
 package com.example.app.view.controllers.admin;
 
 import com.example.app.CarServiceApplication;
-import com.example.app.entity.Car;
-import com.example.app.entity.Detail;
-import com.example.app.entity.Employee;
-import com.example.app.entity.Service;
-import com.example.app.service.CarService;
-import com.example.app.service.DetailService;
-import com.example.app.service.EmployeeService;
-import com.example.app.service.ServiceService;
+import com.example.app.entity.*;
+import com.example.app.repository.OrderRepository;
+import com.example.app.service.*;
 import com.example.app.view.controllers.admin.cars.CarAddController;
 import com.example.app.view.controllers.admin.cars.CarBlockController;
 import com.example.app.view.controllers.admin.details.DetailsAddController;
 import com.example.app.view.controllers.admin.details.DetailsBlockController;
 import com.example.app.view.controllers.admin.employees.EmployeeAddController;
 import com.example.app.view.controllers.admin.employees.EmployeesBlockController;
+import com.example.app.view.controllers.admin.orders.OrderBlockController;
 import com.example.app.view.controllers.admin.services.ServiceAddController;
 import com.example.app.view.controllers.admin.services.ServiceBlockController;
 import javafx.fxml.FXML;
@@ -37,6 +33,7 @@ public class AdminController {
     private final CarService carService = new CarService();
     private final ServiceService serviceService = new ServiceService();
     private final DetailService detailService = new DetailService();
+    private final OrderService orderService = new OrderService();
     @FXML
     private Label nameLabel;
     @FXML
@@ -218,6 +215,19 @@ public class AdminController {
 
     @FXML
     public void onOrdersButtonClick() {
-        System.out.println("Orders");
+        try {
+            List<Order> orders = orderService.getOrders();
+
+            primaryLayout.getChildren().clear();
+            for (Order order : orders) {
+                FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("admin/orders/order-block-view.fxml"));
+                Node node = fxmlLoader.load();
+                OrderBlockController controller = fxmlLoader.getController();
+                controller.setInfo(order);
+                primaryLayout.getChildren().add(node);
+            }
+        } catch (IOException | SQLException exception) {
+            new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
+        }
     }
 }

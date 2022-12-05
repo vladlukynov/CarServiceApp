@@ -55,13 +55,13 @@ GO
 CREATE VIEW GetOrdersWithSum
 AS
     SELECT *, dbo.GetOrderSum(InfoTable.OrderId) as Total FROM
-        (SELECT Orders.OrderId, CarId, CarNumber, Status, CreationDate, StatusChangeDate, EmployeeLogin,
+        (SELECT Orders.OrderId, CarId, CarNumber, Status, CreationDate, StatusChangeDate, EmployeeLogin, ClientLogin,
             ServiceName as Element, OrdersServices.Quantity, (OrdersServices.Quantity * Services.Price) as ElementSum
         FROM Orders
             JOIN OrdersServices ON Orders.OrderId = OrdersServices.OrderId
             JOIN Services ON OrdersServices.ServiceId = Services.ServiceId
         UNION
-        SELECT Orders.OrderId, CarId, CarNumber, Status, CreationDate, StatusChangeDate, EmployeeLogin,
+        SELECT Orders.OrderId, CarId, CarNumber, Status, CreationDate, StatusChangeDate, EmployeeLogin, ClientLogin,
             DetailName, OrdersDetails.Quantity, (OrdersDetails.Quantity * Details.Price)
         FROM Orders
             JOIN OrdersDetails ON Orders.OrderId = OrdersDetails.OrderId

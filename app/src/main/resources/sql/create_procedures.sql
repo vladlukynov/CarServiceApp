@@ -128,8 +128,8 @@ CREATE PROCEDURE AddOrder
     @CarNumber NVARCHAR(9),
     @ClientLogin VARCHAR(30)
 AS
-    INSERT INTO Orders(CarId, CarNumber, ClientLogin)
-        VALUES (@CarId, @CarNumber, @ClientLogin);
+    INSERT INTO Orders(CarId, CarNumber, ClientLogin, Status, StatusChangeDate)
+        VALUES (@CarId, @CarNumber, @ClientLogin, 'Создан', GETDATE());
 GO
 
 -- 12. Изменение статуса заказа по ID заказа
