@@ -11,6 +11,9 @@ module com.example.app {
     opens com.example.app.view.controllers.admin.services to javafx.fxml;
     opens com.example.app.view.controllers.admin.details to javafx.fxml;
     opens com.example.app.view.controllers.admin.orders to javafx.fxml;
+    opens com.example.app.view.controllers.client to javafx.fxml;
+    opens com.example.app.view.controllers.client.details to javafx.fxml;
+    opens com.example.app.view.controllers.client.services to javafx.fxml;
 
     exports com.example.app;
     exports com.example.app.entity;
@@ -22,4 +25,7 @@ module com.example.app {
     exports com.example.app.view.controllers.admin.services;
     exports com.example.app.view.controllers.admin.details;
     exports com.example.app.view.controllers.admin.orders;
+    exports com.example.app.view.controllers.client;
+    exports com.example.app.view.controllers.client.details;
+    exports com.example.app.view.controllers.client.services;
 }

@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -30,7 +31,15 @@
             <Insets />
          </opaqueInsets>
       </VBox>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onEmployeesButtonClick" text="Сотрудники" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      <HBox layoutX="10.0" layoutY="10.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onEmployeesButtonClick" text="Сотрудники" />
+            <Button mnemonicParsing="false" onAction="#onCarsButtonClick" text="Автомобили" />
+            <Button mnemonicParsing="false" onAction="#onServicesButtonClick" text="Услуги" />
+            <Button mnemonicParsing="false" onAction="#onDetailsButtonClick" text="Детали" />
+            <Button mnemonicParsing="false" onAction="#onOrdersButtonClick" text="Заказы" />
+         </children>
+      </HBox>
       <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="10.0" layoutY="100.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="100.0">
          <content>
             <VBox fx:id="primaryLayout" alignment="TOP_CENTER" spacing="10.0">
@@ -40,9 +49,5 @@
             </VBox>
          </content>
       </ScrollPane>
-      <Button layoutX="118.0" layoutY="16.0" mnemonicParsing="false" onAction="#onCarsButtonClick" text="Автомобили" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="10.0" />
-      <Button layoutX="230.0" layoutY="16.0" mnemonicParsing="false" onAction="#onServicesButtonClick" text="Услуги" AnchorPane.leftAnchor="192.0" AnchorPane.topAnchor="10.0" />
-      <Button layoutX="308.0" layoutY="16.0" mnemonicParsing="false" onAction="#onDetailsButtonClick" text="Детали" AnchorPane.leftAnchor="253.0" AnchorPane.topAnchor="10.0" />
-      <Button layoutX="316.0" layoutY="10.0" mnemonicParsing="false" onAction="#onOrdersButtonClick" text="Заказы" AnchorPane.leftAnchor="316.0" AnchorPane.topAnchor="10.0" />
    </children>
 </AnchorPane>
