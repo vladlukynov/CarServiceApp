@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="160.0" style="-fx-background-color: #DBDBDB; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.view.controllers.admin.services.ServiceBlockController">
+   <children>
+      <VBox layoutX="20.0" layoutY="10.0" spacing="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <Label fx:id="nameLabel" text="Замена коробки передач" textFill="#595959">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="isActiveLabel" text="Услуга оказыается" textFill="#595959">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="priceLabel" text="Стоимость: 10000" textFill="#595959">
+               <font>
+                  <Font size="16.0" />
+               </font></Label>
+         </children>
+      </VBox>
+      <HBox layoutX="143.0" layoutY="70.0" spacing="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onDescButtonClick" text="Описание" />
+            <Button fx:id="isActiveButton" mnemonicParsing="false" onAction="#isActiveButtonClick" text="Перестать оказывать" />
+            <Button mnemonicParsing="false" onAction="#onEditButtonClick" text="Редактировать" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

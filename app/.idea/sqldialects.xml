@@ -4,9 +4,11 @@
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/app/repository/CarRepository.java" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/app/repository/ClientRepository.java" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/app/repository/EmployeeRepository.java" dialect="TSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/example/app/repository/ServiceRepository.java" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/example/app/repository/UserRepository.java" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/create_procedures.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/create_tables.sql" dialect="TSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/sql/create_views.sql" dialect="TSQL" />
+    <file url="PROJECT" dialect="TSQL" />
   </component>
 </project>

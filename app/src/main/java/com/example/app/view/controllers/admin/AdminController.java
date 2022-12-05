@@ -3,12 +3,16 @@ package com.example.app.view.controllers.admin;
 import com.example.app.CarServiceApplication;
 import com.example.app.entity.Car;
 import com.example.app.entity.Employee;
+import com.example.app.entity.Service;
 import com.example.app.service.CarService;
 import com.example.app.service.EmployeeService;
+import com.example.app.service.ServiceService;
 import com.example.app.view.controllers.admin.cars.CarAddController;
 import com.example.app.view.controllers.admin.cars.CarBlockController;
 import com.example.app.view.controllers.admin.employees.EmployeeAddController;
 import com.example.app.view.controllers.admin.employees.EmployeesBlockController;
+import com.example.app.view.controllers.admin.services.ServiceAddController;
+import com.example.app.view.controllers.admin.services.ServiceBlockController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -27,6 +31,7 @@ import java.util.List;
 public class AdminController {
     private final EmployeeService employeeService = new EmployeeService();
     private final CarService carService = new CarService();
+    private final ServiceService serviceService = new ServiceService();
     @FXML
     private Label nameLabel;
     @FXML
@@ -131,7 +136,41 @@ public class AdminController {
 
     @FXML
     public void onServicesButtonClick() {
-        System.out.println("Services");
+        try {
+            List<Service> services = serviceService.getServices();
+
+            Button addButton = new Button();
+            addButton.setText("Добавить услугу");
+            addButton.setOnAction(event -> onServiceAddButtonClick());
+            primaryLayout.getChildren().clear();
+            primaryLayout.getChildren().add(addButton);
+            for (Service service : services) {
+                FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("admin/services/service-block-view.fxml"));
+                Node node = fxmlLoader.load();
+                ServiceBlockController controller = fxmlLoader.getController();
+                controller.setInfo(service, this);
+                primaryLayout.getChildren().add(node);
+            }
+        } catch (IOException | SQLException exception) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK);
+            alert.show();
+        }
+    }
+
+    public void onServiceAddButtonClick() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("admin/services/service-add-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            ServiceAddController controller = fxmlLoader.getController();
+            controller.setInfo(this);
+            Stage stage = new Stage();
+            stage.setTitle("Добавить услугу");
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException exception) {
+            new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
+        }
     }
 
     @FXML
