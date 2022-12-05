@@ -2,13 +2,17 @@ package com.example.app.view.controllers.admin;
 
 import com.example.app.CarServiceApplication;
 import com.example.app.entity.Car;
+import com.example.app.entity.Detail;
 import com.example.app.entity.Employee;
 import com.example.app.entity.Service;
 import com.example.app.service.CarService;
+import com.example.app.service.DetailService;
 import com.example.app.service.EmployeeService;
 import com.example.app.service.ServiceService;
 import com.example.app.view.controllers.admin.cars.CarAddController;
 import com.example.app.view.controllers.admin.cars.CarBlockController;
+import com.example.app.view.controllers.admin.details.DetailsAddController;
+import com.example.app.view.controllers.admin.details.DetailsBlockController;
 import com.example.app.view.controllers.admin.employees.EmployeeAddController;
 import com.example.app.view.controllers.admin.employees.EmployeesBlockController;
 import com.example.app.view.controllers.admin.services.ServiceAddController;
@@ -32,6 +36,7 @@ public class AdminController {
     private final EmployeeService employeeService = new EmployeeService();
     private final CarService carService = new CarService();
     private final ServiceService serviceService = new ServiceService();
+    private final DetailService detailService = new DetailService();
     @FXML
     private Label nameLabel;
     @FXML
@@ -175,7 +180,40 @@ public class AdminController {
 
     @FXML
     public void onDetailsButtonClick() {
-        System.out.println("Details");
+        try {
+            List<Detail> details = detailService.getDetails();
+            Button addButton = new Button();
+            addButton.setText("Добавить деталь");
+            addButton.setOnAction(event -> onDetailsAddButtonClick());
+
+            primaryLayout.getChildren().clear();
+            primaryLayout.getChildren().add(addButton);
+            for (Detail detail : details) {
+                FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("admin/details/details-block-view.fxml"));
+                Node node = fxmlLoader.load();
+                DetailsBlockController controller = fxmlLoader.getController();
+                controller.setInfo(detail);
+                primaryLayout.getChildren().add(node);
+            }
+        } catch (IOException | SQLException exception) {
+            new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
+        }
+    }
+
+    public void onDetailsAddButtonClick() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("admin/details/details-add-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            DetailsAddController controller = fxmlLoader.getController();
+            controller.setInfo(this);
+            Stage stage = new Stage();
+            stage.setTitle("Добавить деталь");
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException exception) {
+            new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
+        }
     }
 
     @FXML
