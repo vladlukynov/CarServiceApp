@@ -41,8 +41,7 @@ public class EmployeesBlockController {
     public void isActiveButtonClick() {
         try {
             if (employee.getRoleId() == 1) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Деактивировать администратора плохая идея 🤡", ButtonType.OK);
-                alert.show();
+                new Alert(Alert.AlertType.INFORMATION, "Деактивировать администратора плохая идея 🤡", ButtonType.OK).show();
                 return;
             }
             if (employee.isActive()) {
@@ -54,8 +53,7 @@ public class EmployeesBlockController {
             }
             employee = employeeService.getEmployeeInfo(employee.getUserLogin());
         } catch (SQLException | NoEmployeeByLoginException exception) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 
@@ -72,8 +70,7 @@ public class EmployeesBlockController {
             stage.setScene(scene);
             stage.show();
         } catch (IOException exception) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
         }
     }
 
@@ -90,8 +87,7 @@ public class EmployeesBlockController {
             stage.setScene(scene);
             stage.show();
         } catch (IOException | NoRoleByIdException exception) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
         }
     }
 }

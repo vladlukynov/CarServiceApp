@@ -3,6 +3,7 @@ package com.example.app.view.controllers.admin;
 import com.example.app.CarServiceApplication;
 import com.example.app.entity.*;
 import com.example.app.service.*;
+import com.example.app.utils.UIActions;
 import com.example.app.view.controllers.admin.cars.CarAddController;
 import com.example.app.view.controllers.admin.cars.CarBlockController;
 import com.example.app.view.controllers.admin.details.DetailsAddController;
@@ -12,6 +13,7 @@ import com.example.app.view.controllers.admin.employees.EmployeesBlockController
 import com.example.app.view.controllers.admin.orders.OrderBlockController;
 import com.example.app.view.controllers.admin.services.ServiceAddController;
 import com.example.app.view.controllers.admin.services.ServiceBlockController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -70,8 +72,7 @@ public class AdminController {
                 primaryLayout.getChildren().add(node);
             }
         } catch (SQLException | IOException exception) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 
@@ -88,8 +89,7 @@ public class AdminController {
 
             stage.show();
         } catch (IOException exception) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 
@@ -113,8 +113,7 @@ public class AdminController {
                 primaryLayout.getChildren().add(node);
             }
         } catch (IOException | SQLException exception) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 
@@ -130,8 +129,7 @@ public class AdminController {
             stage.setScene(scene);
             stage.show();
         } catch (IOException exception) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 
@@ -153,8 +151,7 @@ public class AdminController {
                 primaryLayout.getChildren().add(node);
             }
         } catch (IOException | SQLException exception) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 
@@ -170,7 +167,7 @@ public class AdminController {
             stage.setScene(scene);
             stage.show();
         } catch (IOException exception) {
-            new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 
@@ -192,7 +189,7 @@ public class AdminController {
                 primaryLayout.getChildren().add(node);
             }
         } catch (IOException | SQLException exception) {
-            new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 
@@ -208,7 +205,7 @@ public class AdminController {
             stage.setScene(scene);
             stage.show();
         } catch (IOException exception) {
-            new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 
@@ -226,7 +223,17 @@ public class AdminController {
                 primaryLayout.getChildren().add(node);
             }
         } catch (IOException | SQLException exception) {
-            new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
+        }
+    }
+
+    @FXML
+    public void exitButtonClick(ActionEvent event) {
+        try {
+            CarServiceApplication.setUser(null);
+            UIActions.swapStage("auth/auth-view.fxml", "Авторизация", UIActions.getStage(event));
+        } catch (IOException exception) {
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 }

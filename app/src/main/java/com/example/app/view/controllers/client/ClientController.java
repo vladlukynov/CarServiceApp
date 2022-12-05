@@ -6,8 +6,10 @@ import com.example.app.entity.Detail;
 import com.example.app.entity.Service;
 import com.example.app.service.DetailService;
 import com.example.app.service.ServiceService;
+import com.example.app.utils.UIActions;
 import com.example.app.view.controllers.client.details.DetailsBlockController;
 import com.example.app.view.controllers.client.services.ServiceBlockController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -40,7 +42,7 @@ public class ClientController {
     }
 
     @FXML
-    public void onServicesButtonClick(){
+    public void onServicesButtonClick() {
         try {
             List<Service> services = serviceService.getServices();
 
@@ -83,16 +85,26 @@ public class ClientController {
 
     @FXML
     public void addOrderButtonClick() {
-        try{
-        FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("client/add-order-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = new Stage();
-        stage.setTitle("Запись на обслуживание");
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
-    } catch (IOException exception) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("client/add-order-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Запись на обслуживание");
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException exception) {
             new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
+        }
+    }
+
+    @FXML
+    public void exitButtonClick(ActionEvent event) {
+        try {
+            CarServiceApplication.setUser(null);
+            UIActions.swapStage("auth/auth-view.fxml", "Авторизация", UIActions.getStage(event));
+        } catch (IOException exception) {
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 }

@@ -58,7 +58,7 @@ public class DetailsEditController {
             detailsBlockController.setInfo(newDetail);
             UIActions.getStage(event).close();
         } catch (SQLException exception) {
-            new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 

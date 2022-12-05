@@ -34,7 +34,7 @@ public class DetailsBlockController {
             stage.setScene(scene);
             stage.show();
         } catch (IOException exception) {
-            new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 

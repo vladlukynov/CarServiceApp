@@ -41,8 +41,7 @@ public class CarBlockController {
             stage.setScene(scene);
             stage.show();
         } catch (IOException exception) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
     @FXML
@@ -59,8 +58,7 @@ public class CarBlockController {
             }
             car = carService.getCar(car.getCarId());
         } catch (SQLException | NoCarByIdException exception) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 

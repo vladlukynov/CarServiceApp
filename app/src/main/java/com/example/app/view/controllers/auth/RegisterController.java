@@ -46,29 +46,25 @@ public class RegisterController {
 
         if (login.isBlank() || pass.isEmpty() || name.length != 3 || email.isBlank() ||
                 phoneNumber.isBlank() || birthday == null) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Все поля должны быть заполнены!", ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.INFORMATION, "Все поля должны быть заполнены!", ButtonType.OK).show();
             return;
         }
 
         if (Period.between(birthday, LocalDate.now()).getYears() < 18) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Только совершеннолетние пользователи могут зарегистрироваться!", ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.INFORMATION, "Только совершеннолетние пользователи могут зарегистрироваться!", ButtonType.OK).show();
             return;
         }
 
         try {
             List<User> users = userService.getUsers();
             if (users.stream().anyMatch(item -> item.getUserLogin().equals(login))) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Логин занят. Используйте другой!", ButtonType.OK);
-                alert.show();
+                new Alert(Alert.AlertType.INFORMATION, "Логин занят. Используйте другой!", ButtonType.OK).show();
                 return;
             }
 
             if (users.stream().anyMatch(item -> item.getEmail().equals(email)) ||
                     users.stream().anyMatch(item -> item.getPhoneNumber().equals(phoneNumber))) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Почта или телефон уже используются в системе!", ButtonType.OK);
-                alert.show();
+                new Alert(Alert.AlertType.INFORMATION, "Почта или телефон уже используются в системе!", ButtonType.OK).show();
             }
 
             Client client = new Client(login, pass, email, phoneNumber, name[1], name[0], name[2], birthday);
@@ -76,8 +72,7 @@ public class RegisterController {
             clientService.registerClient(client);
             changeScene("auth/auth-view.fxml", "Авторизация", getStage(event));
         } catch (SQLException | IOException exception) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 

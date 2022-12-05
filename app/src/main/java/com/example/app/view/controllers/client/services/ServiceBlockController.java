@@ -34,8 +34,7 @@ public class ServiceBlockController {
             stage.setScene(scene);
             stage.show();
         } catch (IOException exception) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
         }
     }
 

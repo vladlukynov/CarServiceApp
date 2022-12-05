@@ -75,42 +75,36 @@ public class EmployeeEditController {
         try {
             salary = Double.parseDouble(salaryLabel.getText().trim());
         } catch (NumberFormatException exception) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "В поле \"зарплата\" ожидалось число", ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.INFORMATION, "В поле \"зарплата\" ожидалось число", ButtonType.OK).show();
             return;
         }
 
         if (salary < 0) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "В поле \"зарплата\" ожидалось число больше 0", ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.INFORMATION, "В поле \"зарплата\" ожидалось число больше 0", ButtonType.OK).show();
             return;
         }
 
         if (login.isBlank() || pass.isEmpty() || name.length != 3 || email.isBlank() ||
                 phoneNumber.isBlank() || post.isBlank() || birthday == null) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Все поля должны быть заполнены!", ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.INFORMATION, "Все поля должны быть заполнены!", ButtonType.OK).show();
             return;
         }
 
         if (Period.between(birthday, LocalDate.now()).getYears() < 18) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Только совершеннолетние пользователи могут зарегистрироваться!", ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.INFORMATION, "Только совершеннолетние пользователи могут зарегистрироваться!", ButtonType.OK).show();
             return;
         }
 
         try {
             List<Employee> employees = employeeService.getEmployeesInfo();
             if (employees.stream().anyMatch(item -> item.getUserLogin().equals(login) && !item.getUserLogin().equals(employee.getUserLogin()))) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Логин занят. Используйте другой!", ButtonType.OK);
-                alert.show();
+                new Alert(Alert.AlertType.INFORMATION, "Логин занят. Используйте другой!", ButtonType.OK).show();
                 return;
             }
 
             if (employees.stream().anyMatch(item -> item.getEmail().equals(email) && !item.getEmail().equals(employee.getEmail())) ||
                     employees.stream().anyMatch(item -> item.getPhoneNumber().equals(phoneNumber) && !item.getPhoneNumber().equals(employee.getPhoneNumber()))) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Почта или телефон уже используются в системе!", ButtonType.OK);
-                alert.show();
+                new Alert(Alert.AlertType.INFORMATION, "Почта или телефон уже используются в системе!", ButtonType.OK).show();
             }
 
             Employee newEmployee = new Employee(login, pass, email, phoneNumber, roleId, employee.isActive(),
@@ -120,8 +114,7 @@ public class EmployeeEditController {
 
             UIActions.getStage(event).close();
         } catch (SQLException exception) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
         }
     }
 }

@@ -31,20 +31,17 @@ public class CarAddController {
         try {
             year = Integer.parseInt(yearLabel.getText().trim());
         } catch (NumberFormatException exception) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "В поле \"год\" введен не число");
-            alert.show();
+            new Alert(Alert.AlertType.INFORMATION, "В поле \"год\" введен не число").show();
             return;
         }
 
         if (manufacturer.isBlank() || model.isBlank()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Все поля должны быть заполнены!");
-            alert.show();
+            new Alert(Alert.AlertType.INFORMATION, "Все поля должны быть заполнены!").show();
             return;
         }
 
         if ((year < 1990) || (year > LocalDate.now().getYear())) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "В поле год принимается число больше 1990, но не больше текущего года", ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.INFORMATION, "В поле год принимается число больше 1990, но не больше текущего года", ButtonType.OK).show();
             return;
         }
 
@@ -54,8 +51,7 @@ public class CarAddController {
             adminController.onCarsButtonClick();
             UIActions.getStage(event).close();
         } catch (SQLException exception) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 

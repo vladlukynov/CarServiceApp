@@ -29,22 +29,19 @@ public class AuthController {
         String pass = passField.getText();
 
         if (login.isBlank() || pass.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Все поля должны быть заполнены!", ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.INFORMATION, "Все поля должны быть заполнены!", ButtonType.OK).show();
             return;
         }
 
         try {
             User user = userService.getUser(login);
             if (!user.getPass().equals(pass)) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Введен не верный пароль!", ButtonType.OK);
-                alert.show();
+                new Alert(Alert.AlertType.ERROR, "Введен не верный пароль!", ButtonType.OK).show();
                 return;
             }
 
             if (!user.isActive()) {
-                Alert alert = new Alert(Alert.AlertType.ERROR, "Аккаунт не активен в системе!", ButtonType.OK);
-                alert.show();
+                new Alert(Alert.AlertType.ERROR, "Аккаунт не активен в системе!", ButtonType.OK).show();
                 return;
             }
 
@@ -57,11 +54,9 @@ public class AuthController {
             }
 
         } catch (NoUserByLoginException exception) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Пользователя с таким логином не найдено!", ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.ERROR, "Пользователя с таким логином не найдено!", ButtonType.OK).show();
         } catch (SQLException | IOException exception) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK);
-            alert.show();
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 

@@ -65,7 +65,7 @@ public class OrderBlockController {
 
             createLabel.setText("Создан: " + order.getCreationDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
             statusLabel.setText(order.getStatus() + ", изменен: " + order.getStatusChangeDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
-            priceLabel.setText(String.valueOf(order.getTotal()));
+            priceLabel.setText("Стоимость: " + order.getTotal());
         } catch (SQLException | NoCarByIdException | NoClientByLoginException | NoEmployeeByLoginException exception) {
             new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
         }
