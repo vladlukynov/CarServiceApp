@@ -185,7 +185,7 @@ public class AdminController {
                 FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("admin/details/details-block-view.fxml"));
                 Node node = fxmlLoader.load();
                 DetailsBlockController controller = fxmlLoader.getController();
-                controller.setInfo(detail);
+                controller.setInfo(detail, this);
                 primaryLayout.getChildren().add(node);
             }
         } catch (IOException | SQLException exception) {
