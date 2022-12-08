@@ -58,12 +58,12 @@ AS
         (SELECT Orders.OrderId, CarId, CarNumber, Status, CreationDate, StatusChangeDate, EmployeeLogin, ClientLogin,
             ServiceName as Element, OrdersServices.Quantity, (OrdersServices.Quantity * Services.Price) as ElementSum
         FROM Orders
-            JOIN OrdersServices ON Orders.OrderId = OrdersServices.OrderId
-            JOIN Services ON OrdersServices.ServiceId = Services.ServiceId
+            LEFT JOIN OrdersServices ON Orders.OrderId = OrdersServices.OrderId
+            LEFT JOIN Services ON OrdersServices.ServiceId = Services.ServiceId
         UNION
         SELECT Orders.OrderId, CarId, CarNumber, Status, CreationDate, StatusChangeDate, EmployeeLogin, ClientLogin,
             DetailName, OrdersDetails.Quantity, (OrdersDetails.Quantity * Details.Price)
         FROM Orders
-            JOIN OrdersDetails ON Orders.OrderId = OrdersDetails.OrderId
-            JOIN Details ON OrdersDetails.DetailId = Details.DetailId) as InfoTable;
+            LEFT JOIN OrdersDetails ON Orders.OrderId = OrdersDetails.OrderId
+            LEFT JOIN Details ON OrdersDetails.DetailId = Details.DetailId) as InfoTable;
 GO

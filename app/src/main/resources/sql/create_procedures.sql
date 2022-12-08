@@ -348,15 +348,15 @@ AS
                 ServiceName as Element, Price, OrdersServices.Quantity,
                 (OrdersServices.Quantity * Services.Price) as ElementSum
         FROM Orders
-            JOIN OrdersServices ON Orders.OrderId = OrdersServices.OrderId
-            JOIN Services ON OrdersServices.ServiceId = Services.ServiceId
+            LEFT JOIN OrdersServices ON Orders.OrderId = OrdersServices.OrderId
+            LEFT JOIN Services ON OrdersServices.ServiceId = Services.ServiceId
         WHERE Orders.ClientLogin = @ClientLogin
         UNION
         SELECT Orders.OrderId, CarId, CarNumber, Status, CreationDate, StatusChangeDate, EmployeeLogin, ClientLogin,
                DetailName, Price, OrdersDetails.Quantity, (OrdersDetails.Quantity * Details.Price)
         FROM Orders
-            JOIN OrdersDetails ON Orders.OrderId = OrdersDetails.OrderId
-            JOIN Details ON OrdersDetails.DetailId = Details.DetailId
+            LEFT JOIN OrdersDetails ON Orders.OrderId = OrdersDetails.OrderId
+            LEFT JOIN Details ON OrdersDetails.DetailId = Details.DetailId
         WHERE Orders.ClientLogin = @ClientLogin) as InfoTable;
 GO
 

@@ -44,7 +44,7 @@ public class OrderRepository {
 
     public List<Order> getClientOrders(String clientLogin) throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             PreparedStatement statement = connection.prepareStatement("EXEC GetClientOrdersWithSum N'" + clientLogin + "'");
+             PreparedStatement statement = connection.prepareStatement("EXEC GetClientOrdersWithSum '" + clientLogin + "'");
              ResultSet resultSet = statement.executeQuery()) {
             List<Order> orders = new ArrayList<>();
             while (resultSet.next()) {

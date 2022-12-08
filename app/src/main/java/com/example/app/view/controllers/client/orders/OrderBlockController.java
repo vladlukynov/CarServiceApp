@@ -48,7 +48,7 @@ public class OrderBlockController {
             nameLabel.setText("Заказ № " + order.getOrderId());
             carLabel.setText(car.getManufacturer() + " " + car.getCarModel() + " " + car.getReleaseYear() + " " + order.getCarNumber());
 
-            if (!order.getEmployeeLogin().isBlank()) {
+            if (order.getEmployeeLogin() != null) {
                 Employee employee = employeeService.getEmployeeInfo(order.getEmployeeLogin());
                 employeeLabel.setText("Сотрудник: " + employee.getLastName() + " " + employee.getFirstName() + " " + employee.getMiddleName());
             } else {
