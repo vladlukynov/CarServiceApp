@@ -5,8 +5,9 @@ import com.example.app.exception.NoCarByIdException;
 import com.example.app.repository.CarRepository;
 
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Optional;
+import java.time.Period;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class CarService {
     private final CarRepository carRepository = new CarRepository();
@@ -43,6 +44,16 @@ public class CarService {
     }
 
     public List<Car> getClientCars(String clientLogin) throws SQLException {
-        return carRepository.getClientCars(clientLogin);
+        Map<String, List<Car>> carsMap = carRepository.getClientCars(clientLogin).stream().collect(Collectors.groupingBy(Car::getCarNumber));
+        List<Car> cars = new ArrayList<>();
+
+        for (String key : carsMap.keySet()) {
+            cars.add(carsMap.get(key).stream().min((o1, o2) -> {
+                int duration = Period.between(o1.getCreationDate(), o2.getCreationDate()).getDays();
+                return Integer.compare(0, duration);
+            }).orElse(null));
+        }
+
+        return cars;
     }
 }
