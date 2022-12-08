@@ -1,4 +1,4 @@
-package com.example.app.view.controllers.admin.orders;
+package com.example.app.view.controllers.client.orders;
 
 import com.example.app.CarServiceApplication;
 import com.example.app.entity.Order;
@@ -25,7 +25,7 @@ public class OrderInfoController {
         try {
             titleLabel.setText("Прайс-лист заказа № " + order.getOrderId());
             for (OrderElement element : order.getElements()) {
-                FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("admin/orders/order-info-block-view.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("client/orders/order-info-block-view.fxml"));
                 Node node = fxmlLoader.load();
                 OrderInfoBlockController controller = fxmlLoader.getController();
                 controller.setInfo(element);

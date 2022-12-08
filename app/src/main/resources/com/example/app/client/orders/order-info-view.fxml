@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="466.0" prefWidth="703.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.view.controllers.client.orders.OrderInfoController">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="193.0" layoutY="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <Label fx:id="titleLabel" text="Информация о заказе № 1" textFill="#595959">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="43.0" layoutY="79.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: TRANSPARENT;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0">
+         <content>
+            <VBox fx:id="primaryLayout" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
+      <VBox alignment="TOP_CENTER" layoutX="183.0" layoutY="430.3999938964844" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onCloseButtonClick" text="Закрыть" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

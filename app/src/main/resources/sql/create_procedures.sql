@@ -344,7 +344,7 @@ CREATE PROCEDURE GetClientOrdersWithSum
     @ClientLogin VARCHAR(30)
 AS
     SELECT *, dbo.GetOrderSum(InfoTable.OrderId) as Total FROM
-        (SELECT Orders.OrderId, CarId, CarNumber, Status, CreationDate, StatusChangeDate, EmployeeLogin,
+        (SELECT Orders.OrderId, CarId, CarNumber, Status, CreationDate, StatusChangeDate, EmployeeLogin, ClientLogin,
                 ServiceName as Element, Price, OrdersServices.Quantity,
                 (OrdersServices.Quantity * Services.Price) as ElementSum
         FROM Orders
@@ -352,7 +352,7 @@ AS
             JOIN Services ON OrdersServices.ServiceId = Services.ServiceId
         WHERE Orders.ClientLogin = @ClientLogin
         UNION
-        SELECT Orders.OrderId, CarId, CarNumber, Status, CreationDate, StatusChangeDate, EmployeeLogin,
+        SELECT Orders.OrderId, CarId, CarNumber, Status, CreationDate, StatusChangeDate, EmployeeLogin, ClientLogin,
                DetailName, Price, OrdersDetails.Quantity, (OrdersDetails.Quantity * Details.Price)
         FROM Orders
             JOIN OrdersDetails ON Orders.OrderId = OrdersDetails.OrderId

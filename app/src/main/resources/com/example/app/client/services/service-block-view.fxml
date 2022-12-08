@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="160.0" style="-fx-background-color: #DBDBDB; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.view.controllers.client.services.ServiceBlockController">
+<AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="93.0" prefWidth="318.0" style="-fx-background-color: #DBDBDB; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.view.controllers.client.services.ServiceBlockController">
    <children>
       <VBox layoutX="20.0" layoutY="10.0" spacing="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
          <children>

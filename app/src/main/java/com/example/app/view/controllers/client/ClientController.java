@@ -3,11 +3,14 @@ package com.example.app.view.controllers.client;
 import com.example.app.CarServiceApplication;
 import com.example.app.entity.Client;
 import com.example.app.entity.Detail;
+import com.example.app.entity.Order;
 import com.example.app.entity.Service;
 import com.example.app.service.DetailService;
+import com.example.app.service.OrderService;
 import com.example.app.service.ServiceService;
 import com.example.app.utils.UIActions;
 import com.example.app.view.controllers.client.details.DetailsBlockController;
+import com.example.app.view.controllers.client.orders.OrderBlockController;
 import com.example.app.view.controllers.client.services.ServiceBlockController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,6 +30,7 @@ import java.util.List;
 public class ClientController {
     private final ServiceService serviceService = new ServiceService();
     private final DetailService detailService = new DetailService();
+    private final OrderService orderService = new OrderService();
     @FXML
     private Label nameLabel;
     @FXML
@@ -80,7 +84,20 @@ public class ClientController {
 
     @FXML
     public void onOrdersButtonClick() {
+        try {
+            List<Order> orders = orderService.getClientOrders(CarServiceApplication.getUser().getUserLogin());
 
+            primaryLayout.getChildren().clear();
+            for (Order order : orders) {
+                FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("client/orders/order-block-view.fxml"));
+                Node node = fxmlLoader.load();
+                OrderBlockController controller = fxmlLoader.getController();
+                controller.setInfo(order);
+                primaryLayout.getChildren().add(node);
+            }
+        } catch (IOException | SQLException exception) {
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
+        }
     }
 
     @FXML
