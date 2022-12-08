@@ -14,7 +14,7 @@ public class OrderInfoBlockController {
 
     public void setInfo(OrderElement element) {
         nameLabel.setText(element.getElement());
-        priceLabel.setText("Стоимость: " + element.getElementSum());
+        priceLabel.setText("Стоимость: " + element.getElementSum() + " руб.");
         quantityLabel.setText("Количество: " + element.getQuantity());
     }
 }

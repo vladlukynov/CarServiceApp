@@ -19,7 +19,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label fx:id="quantityLabel" text="Количество: 4">
+            <Label fx:id="quantityLabel" text="Количество: 4" textFill="#595959">
                <font>
                   <Font size="14.0" />
                </font>

@@ -45,7 +45,7 @@ public class DetailsBlockController {
         this.adminController = controller;
 
         nameLabel.setText(detail.getDetailName());
-        priceLabel.setText("Стоимость: " + detail.getPrice());
-        quantityLabel.setText("Количество: " + detail.getQuantity());
+        priceLabel.setText("Стоимость: " + detail.getPrice() + " руб.");
+        quantityLabel.setText("Количество на складе: " + detail.getQuantity());
     }
 }

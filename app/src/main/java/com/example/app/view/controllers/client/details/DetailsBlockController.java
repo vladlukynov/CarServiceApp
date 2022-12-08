@@ -15,7 +15,7 @@ public class DetailsBlockController {
     public void setInfo(Detail detail) {
 
         nameLabel.setText(detail.getDetailName());
-        priceLabel.setText("Стоимость: " + detail.getPrice());
-        quantityLabel.setText("Количество: " + detail.getQuantity());
+        priceLabel.setText("Стоимость: " + detail.getPrice() + " руб.");
+        quantityLabel.setText("Количество на складе: " + detail.getQuantity());
     }
 }

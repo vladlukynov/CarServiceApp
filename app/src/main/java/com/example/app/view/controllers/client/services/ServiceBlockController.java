@@ -17,8 +17,6 @@ public class ServiceBlockController {
     @FXML
     private Label nameLabel;
     @FXML
-    private Label isActiveLabel;
-    @FXML
     private Label priceLabel;
 
     @FXML
@@ -42,7 +40,6 @@ public class ServiceBlockController {
         this.service = service;
 
         nameLabel.setText(service.getServiceName());
-        isActiveLabel.setText(service.isActive() ? "Услуга оказывается" : "Услуга не оказыается");
-        priceLabel.setText("Стоимость: " + service.getPrice());
+        priceLabel.setText("Стоимость: " + service.getPrice() + " руб.");
     }
 }

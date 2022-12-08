@@ -89,6 +89,6 @@ public class ServiceBlockController {
         nameLabel.setText(service.getServiceName());
         isActiveLabel.setText(service.isActive() ? "Услуга оказывается" : "Услуга не оказыается");
         isActiveButton.setText(service.isActive() ? "Перестать оказывать" : "Начать оказывать");
-        priceLabel.setText("Стоимость: " + service.getPrice());
+        priceLabel.setText("Стоимость: " + service.getPrice() + " руб.");
     }
 }

@@ -16,11 +16,6 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="isActiveLabel" text="Услуга оказыается" textFill="#595959">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
             <Label fx:id="priceLabel" text="Стоимость: 10000" textFill="#595959">
                <font>
                   <Font size="16.0" />
