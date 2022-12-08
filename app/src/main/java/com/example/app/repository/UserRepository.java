@@ -11,24 +11,21 @@ import java.util.List;
 public class UserRepository {
     public List<User> getUsers() throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("""
+             PreparedStatement statement = connection.prepareStatement("""
                      SELECT UserLogin, Pass, Email, PhoneNumber, RoleId, IsActive FROM GetEmployeesInfo
                      UNION
                      SELECT UserLogin, Pass, Email, PhoneNumber, RoleId, IsActive FROM GetClientsInfo
-                     """)) {
+                     """);
+             ResultSet resultSet = statement.executeQuery()) {
             List<User> list = new ArrayList<>();
 
             while (resultSet.next()) {
-                String userLogin = resultSet.getString("UserLogin");
-                String pass = resultSet.getString("Pass");
-                String email = resultSet.getString("Email");
-                String phoneNumber = resultSet.getString("PhoneNumber");
-                int roleId = resultSet.getInt("RoleId");
-                boolean isActive = resultSet.getBoolean("IsActive");
-                User user = new User(userLogin, pass, email, phoneNumber, roleId, isActive);
-
-                list.add(user);
+                list.add(new User(resultSet.getString("UserLogin"),
+                        resultSet.getString("Pass"),
+                        resultSet.getString("Email"),
+                        resultSet.getString("PhoneNumber"),
+                        resultSet.getInt("RoleId"),
+                        resultSet.getBoolean("IsActive")));
             }
 
             return list;
@@ -37,15 +34,15 @@ public class UserRepository {
 
     public void activateUser(String userLogin) throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             Statement statement = connection.createStatement()) {
-            statement.execute("EXEC ChangeUserStatus '" + userLogin + "'," + 1);
+             PreparedStatement statement = connection.prepareStatement("EXEC ChangeUserStatus '" + userLogin + "'," + 1)) {
+            statement.execute();
         }
     }
 
     public void deactivateUser(String userLogin) throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             Statement statement = connection.createStatement()) {
-            statement.execute("EXEC ChangeUserStatus '" + userLogin + "'," + 0);
+             PreparedStatement statement = connection.prepareStatement("EXEC ChangeUserStatus '" + userLogin + "'," + 0)) {
+            statement.execute();
         }
     }
 }

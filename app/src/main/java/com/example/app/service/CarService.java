@@ -25,12 +25,13 @@ public class CarService {
 
         throw new NoCarByIdException("Not found car by id " + carId);
     }
+
     public void activateCar(int carId) throws SQLException {
-        carRepository.activateCar(carId);
+        carRepository.changeCarStatus(carId, 1);
     }
 
     public void deactivateCar(int carId) throws SQLException {
-        carRepository.deactivateCar(carId);
+        carRepository.changeCarStatus(carId, 0);
     }
 
     public void updateCar(Car newCar, int carId) throws SQLException {

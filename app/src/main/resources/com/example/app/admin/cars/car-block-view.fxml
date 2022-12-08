@@ -7,7 +7,7 @@
 
 <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="125.0" prefWidth="276.0" style="-fx-background-color: #DBDBDB; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.view.controllers.admin.cars.CarBlockController">
    <children>
-      <Label fx:id="nameLabel" layoutX="14.0" layoutY="14.0" prefWidth="238.0" text="Huyndai Solaris 2013" textFill="#595959" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
+      <Label fx:id="nameLabel" layoutX="14.0" layoutY="14.0" text="Huyndai Solaris 2013" textFill="#595959" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>

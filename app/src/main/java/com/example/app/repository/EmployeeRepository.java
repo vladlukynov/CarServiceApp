@@ -5,35 +5,28 @@ import com.example.app.entity.Employee;
 import static com.example.app.utils.DatabaseAuth.*;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeRepository {
     public List<Employee> getEmployeesInfo() throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM GetEmployeesInfo")) {
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM GetEmployeesInfo");
+             ResultSet resultSet = statement.executeQuery()) {
             List<Employee> list = new ArrayList<>();
             while (resultSet.next()) {
-                String userLogin = resultSet.getString("UserLogin");
-                String pass = resultSet.getString("Pass");
-                String email = resultSet.getString("Email");
-                String phoneNumber = resultSet.getString("PhoneNumber");
-                int roleId = resultSet.getInt("RoleId");
-                boolean isActive = resultSet.getBoolean("IsActive");
-                String firstName = resultSet.getString("FirstName");
-                String lastName = resultSet.getString("LastName");
-                String middleName = resultSet.getString("MiddleName");
-                String post = resultSet.getString("Post");
-                double salary = resultSet.getDouble("Salary");
-                LocalDate birthday = resultSet.getDate("Birthday")
-                        .toLocalDate();
-
-                Employee employee = new Employee(userLogin, pass, email, phoneNumber, roleId, isActive,
-                        firstName, lastName, middleName, post, salary, birthday);
-
-                list.add(employee);
+                list.add(new Employee(resultSet.getString("UserLogin"),
+                        resultSet.getString("Pass"),
+                        resultSet.getString("Email"),
+                        resultSet.getString("PhoneNumber"),
+                        resultSet.getInt("RoleId"),
+                        resultSet.getBoolean("IsActive"),
+                        resultSet.getString("FirstName"),
+                        resultSet.getString("LastName"),
+                        resultSet.getString("MiddleName"),
+                        resultSet.getString("Post"),
+                        resultSet.getDouble("Salary"),
+                        resultSet.getDate("Birthday").toLocalDate()));
             }
 
             return list;
@@ -42,36 +35,36 @@ public class EmployeeRepository {
 
     public void updateEmployee(String userLogin, Employee newEmployee) throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             Statement statement = connection.createStatement()) {
-            statement.execute("EXEC EditEmployee '" + userLogin + "','" +
-                    newEmployee.getUserLogin() + "','" +
-                    newEmployee.getPass() + "','" +
-                    newEmployee.getEmail() + "','" +
-                    newEmployee.getPhoneNumber() + "'," +
-                    newEmployee.getRoleId() + ",'" +
-                    newEmployee.getFirstName() + "','" +
-                    newEmployee.getLastName() + "','" +
-                    newEmployee.getMiddleName() + "','" +
-                    newEmployee.getPost() + "'," +
-                    newEmployee.getSalary() + ",'" +
-                    newEmployee.getBirthday() + "'");
+             PreparedStatement statement = connection.prepareStatement("EXEC EditEmployee '" + userLogin + "',"
+                     + "'" + newEmployee.getUserLogin() + "',"
+                     + "'" + newEmployee.getPass() + "',"
+                     + "'" + newEmployee.getEmail() + "',"
+                     + "'" + newEmployee.getPhoneNumber() + "',"
+                     + newEmployee.getRoleId() + ","
+                     + "N'" + newEmployee.getFirstName() + "',"
+                     + "N'" + newEmployee.getLastName() + "',"
+                     + "N'" + newEmployee.getMiddleName() + "',"
+                     + "N'" + newEmployee.getPost() + "',"
+                     + newEmployee.getSalary() + ","
+                     + "'" + newEmployee.getBirthday() + "'")) {
+            statement.execute();
         }
     }
 
     public void registerEmployee(Employee employee) throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             Statement statement = connection.createStatement()) {
-            statement.execute("EXEC RegisterEmployee '" + employee.getUserLogin() + "','" +
-                    employee.getPass() + "','" +
-                    employee.getEmail() + "','" +
-                    employee.getPhoneNumber() + "'," +
-                    employee.getRoleId() + ",'" +
-                    employee.getFirstName() + "','" +
-                    employee.getLastName() + "','" +
-                    employee.getMiddleName() + "','" +
-                    employee.getPost() + "'," +
-                    employee.getSalary() + ",'" +
-                    employee.getBirthday() + "'");
+             PreparedStatement statement = connection.prepareStatement("EXEC RegisterEmployee '" + employee.getUserLogin() + "',"
+                     + "'" + employee.getPass() + "',"
+                     + "'" + employee.getEmail() + "',"
+                     + "'" + employee.getPhoneNumber() + "',"
+                     + employee.getRoleId() + ","
+                     + "N'" + employee.getFirstName() + "',"
+                     + "N'" + employee.getLastName() + "',"
+                     + "N'" + employee.getMiddleName() + "',"
+                     + "N'" + employee.getPost() + "',"
+                     + employee.getSalary() + ","
+                     + "'" + employee.getBirthday() + "'")) {
+            statement.execute();
         }
     }
 }

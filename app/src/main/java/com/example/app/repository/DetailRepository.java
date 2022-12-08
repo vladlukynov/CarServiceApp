@@ -11,8 +11,8 @@ import static com.example.app.utils.DatabaseAuth.*;
 public class DetailRepository {
     public List<Detail> getDetails() throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM GetDetailsInfo")) {
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM GetDetailsInfo");
+             ResultSet resultSet = statement.executeQuery()) {
             List<Detail> details = new ArrayList<>();
             while (resultSet.next()) {
                 Detail detail = new Detail(resultSet.getInt("DetailId"),
@@ -27,20 +27,20 @@ public class DetailRepository {
 
     public void addDetail(Detail detail) throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             Statement statement = connection.createStatement()) {
-            statement.execute("EXEC AddDetail '" + detail.getDetailName() + "'," +
-                    detail.getPrice() + "," +
-                    detail.getQuantity());
+             PreparedStatement statement = connection.prepareStatement("EXEC AddDetail N'" + detail.getDetailName() + "',"
+                     + detail.getPrice() + ","
+                     + detail.getQuantity())) {
+            statement.execute();
         }
     }
 
     public void updateDetail(int detailId, Detail newDetail) throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             Statement statement = connection.createStatement()) {
-            statement.execute("EXEC EditDetail " + detailId + ",'" +
-                    newDetail.getDetailName() + "'," +
-                    newDetail.getPrice() + "," +
-                    newDetail.getQuantity());
+             PreparedStatement statement = connection.prepareStatement("EXEC EditDetail " + detailId + ","
+                     + "N'" + newDetail.getDetailName() + "',"
+                     + newDetail.getPrice() + ","
+                     + newDetail.getQuantity())) {
+            statement.execute();
         }
     }
 }

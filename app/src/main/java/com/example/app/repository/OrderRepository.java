@@ -35,10 +35,10 @@ public class OrderRepository {
 
     public void addOrder(int carId, String carNumber, String clientLogin) throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             Statement statement = connection.createStatement()) {
-            statement.execute("EXEC AddOrder " + carId + ",'" +
-                    carNumber + "','" +
-                    clientLogin + "'");
+             PreparedStatement statement = connection.prepareStatement("EXEC AddOrder " + carId + ","
+                     + "'" + carNumber + "',"
+                     + "'" + clientLogin + "'")) {
+            statement.execute();
         }
     }
 }

@@ -11,51 +11,41 @@ import static com.example.app.utils.DatabaseAuth.*;
 public class CarRepository {
     public List<Car> getCars() throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM GetCarsInfo")) {
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM GetCarsInfo");
+             ResultSet resultSet = statement.executeQuery()) {
             List<Car> cars = new ArrayList<>();
 
             while (resultSet.next()) {
-                Car car = new Car(
+                cars.add(new Car(
                         resultSet.getInt("CarId"),
                         resultSet.getString("Manufacturer"),
                         resultSet.getString("CarModel"),
                         resultSet.getInt("ReleaseYear"),
-                        resultSet.getBoolean("IsActive")
-                );
-
-                cars.add(car);
+                        resultSet.getBoolean("IsActive")));
             }
 
             return cars;
         }
     }
 
-    public void activateCar(int carId) throws SQLException {
+    public void changeCarStatus(int carId, int status) throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             Statement statement = connection.createStatement()) {
-            statement.execute("EXEC ChangeCarStatus " + carId + "," + 1);
-        }
-    }
-
-    public void deactivateCar(int carId) throws SQLException {
-        try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             Statement statement = connection.createStatement()) {
-            statement.execute("EXEC ChangeCarStatus " + carId + "," + 0);
+             PreparedStatement statement = connection.prepareStatement("EXEC ChangeCarStatus " + carId + "," + status)) {
+            statement.execute();
         }
     }
 
     public void updateCar(Car newCar, int carId) throws SQLException {
         addCar(newCar);
-        deactivateCar(carId);
+        changeCarStatus(carId, 0);
     }
 
     public void addCar(Car car) throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             Statement statement = connection.createStatement()) {
-            statement.execute("EXEC AddCar '" + car.getManufacturer() + "','" +
-                    car.getCarModel() + "'," +
-                    car.getReleaseYear());
+             PreparedStatement statement = connection.prepareStatement("EXEC AddCar '" + car.getManufacturer() + "',"
+                     + "'" + car.getCarModel() + "',"
+                     + car.getReleaseYear())) {
+            statement.execute();
         }
     }
 }

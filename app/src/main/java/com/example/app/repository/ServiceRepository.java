@@ -15,12 +15,11 @@ public class ServiceRepository {
              ResultSet resultSet = statement.executeQuery()) {
             List<Service> services = new ArrayList<>();
             while (resultSet.next()) {
-                Service service = new Service(resultSet.getInt("ServiceId"),
+                services.add(new Service(resultSet.getInt("ServiceId"),
                         resultSet.getString("ServiceName"),
                         resultSet.getString("Description"),
                         resultSet.getDouble("Price"),
-                        resultSet.getBoolean("IsActive"));
-                services.add(service);
+                        resultSet.getBoolean("IsActive")));
             }
             return services;
         }
@@ -35,8 +34,8 @@ public class ServiceRepository {
 
     public void addService(Service service) throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             PreparedStatement statement = connection.prepareStatement("EXEC AddService '" + service.getServiceName() + "','"
-                     + service.getDescription() + "',"
+             PreparedStatement statement = connection.prepareStatement("EXEC AddService '" + service.getServiceName() + "',"
+                     + "'" + service.getDescription() + "',"
                      + service.getPrice())) {
             statement.execute();
         }
@@ -44,9 +43,9 @@ public class ServiceRepository {
 
     public void updateService(int serviceId, Service newService) throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             PreparedStatement statement = connection.prepareStatement("EXEC EditService " + serviceId + ",N'"
-                     + newService.getServiceName() + "',N'"
-                     + newService.getDescription() + "',"
+             PreparedStatement statement = connection.prepareStatement("EXEC EditService " + serviceId + ","
+                     + "N'" + newService.getServiceName() + "',"
+                     + "N'" + newService.getDescription() + "',"
                      + newService.getPrice())) {
             statement.execute();
         }
