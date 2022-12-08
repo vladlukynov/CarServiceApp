@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public class ServiceService {
     private final ServiceRepository serviceRepository = new ServiceRepository();
+
     public List<Service> getServices() throws SQLException {
         return serviceRepository.getServices();
     }
@@ -26,11 +27,11 @@ public class ServiceService {
     }
 
     public void activateService(int serviceId) throws SQLException {
-        serviceRepository.activateService(serviceId);
+        serviceRepository.changeServiceStatus(serviceId, 1);
     }
 
     public void deactivateService(int serviceId) throws SQLException {
-        serviceRepository.deactivateService(serviceId);
+        serviceRepository.changeServiceStatus(serviceId, 0);
     }
 
     public void addService(Service service) throws SQLException {
@@ -38,7 +39,6 @@ public class ServiceService {
     }
 
     public void updateService(int serviceId, Service newService) throws SQLException {
-        serviceRepository.addService(newService);
-        serviceRepository.deactivateService(serviceId);
+        serviceRepository.updateService(serviceId, newService);
     }
 }

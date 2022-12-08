@@ -1,8 +1,6 @@
 package com.example.app.repository;
 
 import com.example.app.entity.Service;
-import com.example.app.service.ServiceService;
-import javafx.scene.effect.DropShadow;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,10 +11,9 @@ import static com.example.app.utils.DatabaseAuth.*;
 public class ServiceRepository {
     public List<Service> getServices() throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM GetServicesInfo")) {
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM GetServicesInfo");
+             ResultSet resultSet = statement.executeQuery()) {
             List<Service> services = new ArrayList<>();
-
             while (resultSet.next()) {
                 Service service = new Service(resultSet.getInt("ServiceId"),
                         resultSet.getString("ServiceName"),
@@ -29,26 +26,29 @@ public class ServiceRepository {
         }
     }
 
-    public void activateService(int serviceId) throws SQLException {
+    public void changeServiceStatus(int serviceId, int status) throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             Statement statement = connection.createStatement()) {
-            statement.execute("EXEC ChangeServiceStatus " + serviceId + "," + 1);
-        }
-    }
-
-    public void deactivateService(int serviceId) throws SQLException {
-        try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             Statement statement = connection.createStatement()) {
-            statement.execute("EXEC ChangeServiceStatus " + serviceId + "," + 0);
+             PreparedStatement statement = connection.prepareStatement("EXEC ChangeServiceStatus " + serviceId + "," + status)) {
+            statement.execute();
         }
     }
 
     public void addService(Service service) throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             Statement statement = connection.createStatement()) {
-            statement.execute("EXEC AddService '" + service.getServiceName() + "','" +
-                    service.getDescription() + "'," +
-                    service.getPrice());
+             PreparedStatement statement = connection.prepareStatement("EXEC AddService '" + service.getServiceName() + "','"
+                     + service.getDescription() + "',"
+                     + service.getPrice())) {
+            statement.execute();
+        }
+    }
+
+    public void updateService(int serviceId, Service newService) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password);
+             PreparedStatement statement = connection.prepareStatement("EXEC EditService " + serviceId + ",N'"
+                     + newService.getServiceName() + "',N'"
+                     + newService.getDescription() + "',"
+                     + newService.getPrice())) {
+            statement.execute();
         }
     }
 }

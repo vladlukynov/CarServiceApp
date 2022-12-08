@@ -37,7 +37,7 @@ GO
 
 -- Таблица Services
 -- 4. Добавление записи о новой услуге
--- Входные данные: ServiceName, Descpiption, Price
+-- Входные данные: ServiceName, Description, Price
 GO
 CREATE PROCEDURE AddService
     @ServiceName NVARCHAR(50),
@@ -49,7 +49,7 @@ AS
 GO
 
 -- 5. Изменение информации об услуге (без изменения ID услуги) по ID услуги
--- Входные данные: ServiceName, Descpiption, Price
+-- Входные данные: ServiceName, Description, Price
 GO
 CREATE PROCEDURE EditService
     @ServiceId INT,
@@ -57,11 +57,13 @@ CREATE PROCEDURE EditService
     @Description NVARCHAR(150),
     @Price MONEY
 AS
-    UPDATE Services SET
-        ServiceName = @ServiceName,
-        Description = @Description,
-        Price = @Price
-    WHERE Services.ServiceId = @ServiceId;
+    SET XACT_ABORT ON;
+    BEGIN TRANSACTION;
+        INSERT INTO Services(ServiceName, Description, Price)
+            VALUES (@ServiceName, @Description, @Price);
+        UPDATE Services SET IsActive = 0
+            WHERE Services.ServiceId = @ServiceId;
+    COMMIT;
 GO
 
 -- 6. Изменение статуса услуги по ID услуги
@@ -86,7 +88,8 @@ AS
         VALUES (@DetailName, @Price, @Quantity);
 GO
 
--- 8. Изменение информации о детали (без изменения ID детали) по ID детали Входные данные: DetailName, Price, Quantity
+-- 8. Изменение информации о детали (без изменения ID детали) по ID детали
+-- Входные данные: DetailName, Price, Quantity
 GO
 CREATE PROCEDURE EditDetail
     @DetailId INT,
@@ -335,7 +338,7 @@ AS
 GO
 
 -- 5. Вывод заказов клиента с указанием использованных деталей и услуг и стоимости заказа, исходя из количества этих деталей и услуг
--- Таблицы: Orders, OrdersSerivces, OrdersDetails, Services, Details
+-- Таблицы: Orders, OrdersServices, OrdersDetails, Services, Details
 GO
 CREATE PROCEDURE GetClientOrdersWithSum
     @ClientLogin VARCHAR(30)
