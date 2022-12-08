@@ -48,4 +48,21 @@ public class CarRepository {
             statement.execute();
         }
     }
+
+    public List<Car> getClientCars(String clientLogin) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password);
+             PreparedStatement statement = connection.prepareStatement("EXEC GetClientCars '" + clientLogin + "'");
+             ResultSet resultSet = statement.executeQuery()) {
+            List<Car> cars = new ArrayList<>();
+            while (resultSet.next()) {
+                cars.add(new Car(resultSet.getInt("CarId"),
+                        resultSet.getString("Manufacturer"),
+                        resultSet.getString("CarModel"),
+                        resultSet.getInt("ReleaseYear"),
+                        resultSet.getString("CarNumber"),
+                        resultSet.getDate("CreationDate").toLocalDate()));
+            }
+            return cars;
+        }
+    }
 }

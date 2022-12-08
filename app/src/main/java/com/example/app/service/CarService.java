@@ -41,4 +41,8 @@ public class CarService {
     public void addCar(Car car) throws SQLException {
         carRepository.addCar(car);
     }
+
+    public List<Car> getClientCars(String clientLogin) throws SQLException {
+        return carRepository.getClientCars(clientLogin);
+    }
 }

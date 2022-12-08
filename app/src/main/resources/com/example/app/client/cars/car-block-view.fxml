@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="97.0" prefWidth="276.0" style="-fx-background-color: #DBDBDB; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.view.controllers.client.cars.CarBlockController">
+   <children>
+      <VBox layoutX="20.0" layoutY="10.0" spacing="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <Label fx:id="nameLabel" text="Huyndai Solaris 2013" textFill="#595959">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="creationDateLabel" text="Добавлен: 08.12.2002" textFill="#595959">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

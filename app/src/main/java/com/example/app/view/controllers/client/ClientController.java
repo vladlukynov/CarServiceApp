@@ -1,14 +1,13 @@
 package com.example.app.view.controllers.client;
 
 import com.example.app.CarServiceApplication;
-import com.example.app.entity.Client;
-import com.example.app.entity.Detail;
-import com.example.app.entity.Order;
-import com.example.app.entity.Service;
+import com.example.app.entity.*;
+import com.example.app.service.CarService;
 import com.example.app.service.DetailService;
 import com.example.app.service.OrderService;
 import com.example.app.service.ServiceService;
 import com.example.app.utils.UIActions;
+import com.example.app.view.controllers.client.cars.CarBlockController;
 import com.example.app.view.controllers.client.details.DetailsBlockController;
 import com.example.app.view.controllers.client.orders.OrderBlockController;
 import com.example.app.view.controllers.client.services.ServiceBlockController;
@@ -31,6 +30,7 @@ public class ClientController {
     private final ServiceService serviceService = new ServiceService();
     private final DetailService detailService = new DetailService();
     private final OrderService orderService = new OrderService();
+    private final CarService carService = new CarService();
     @FXML
     private Label nameLabel;
     @FXML
@@ -112,6 +112,24 @@ public class ClientController {
             stage.show();
         } catch (IOException exception) {
             new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
+        }
+    }
+
+    @FXML
+    public void onCarsButtonClick() {
+        try {
+            List<Car> cars = carService.getClientCars(CarServiceApplication.getUser().getUserLogin());
+
+            primaryLayout.getChildren().clear();
+            for (Car car : cars) {
+                FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("client/cars/car-block-view.fxml"));
+                Node node = fxmlLoader.load();
+                CarBlockController controller = fxmlLoader.getController();
+                controller.setInfo(car);
+                primaryLayout.getChildren().add(node);
+            }
+        } catch (SQLException | IOException exception) {
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 

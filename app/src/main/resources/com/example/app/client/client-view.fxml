@@ -43,6 +43,7 @@
                   <Button mnemonicParsing="false" onAction="#onServicesButtonClick" text="Услуги" />
                   <Button mnemonicParsing="false" onAction="#onDetailsButtonClick" text="Детали" />
                   <Button mnemonicParsing="false" onAction="#onOrdersButtonClick" text="Мои заказы" />
+                  <Button mnemonicParsing="false" onAction="#onCarsButtonClick" text="Мои автомобили" />
                </children>
             </HBox>
             <Button mnemonicParsing="false" onAction="#exitButtonClick" style="-fx-border-color: #f72525;" text="Выйти из аккаунта" textFill="#f72525" />

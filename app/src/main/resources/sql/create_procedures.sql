@@ -366,7 +366,7 @@ GO
 CREATE PROCEDURE GetClientCars
     @ClientLogin VARCHAR(30)
 AS
-    SELECT Cars.Manufacturer, Cars.CarModel, Cars.ReleaseYear, Orders.CarNumber, Orders.CreationDate FROM Orders
+    SELECT Cars.CarId, Cars.Manufacturer, Cars.CarModel, Cars.ReleaseYear, Orders.CarNumber, Orders.CreationDate FROM Orders
         JOIN Cars ON Orders.CarId = Cars.CarId
     WHERE ClientLogin = @ClientLogin
     ORDER BY Orders.CreationDate;
