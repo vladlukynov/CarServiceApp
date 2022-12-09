@@ -10,7 +10,8 @@ import com.example.app.service.CarService;
 import com.example.app.service.ClientService;
 import com.example.app.service.OrderService;
 import com.example.app.view.controllers.employee.EmployeeController;
-import com.example.app.view.controllers.employee.orders.details.ServicesInOrderController;
+import com.example.app.view.controllers.employee.orders.details.DetailsInOrderController;
+import com.example.app.view.controllers.employee.orders.services.ServicesInOrderController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -73,13 +74,31 @@ public class AcceptOrderBlockController implements OrderBlockInterface {
     @FXML
     public void onDetailsButtonClick() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("employee/orders/details/services-in-order-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("employee/orders/details/details-in-order-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            DetailsInOrderController controller = fxmlLoader.getController();
+            controller.setInfo(order);
+
+            Stage stage = new Stage();
+            stage.setTitle("Детали в заказе");
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException exception) {
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
+        }
+    }
+
+    @FXML
+    public void onServicesButtonClick() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("employee/orders/services/services-in-order-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             ServicesInOrderController controller = fxmlLoader.getController();
             controller.setInfo(order);
 
             Stage stage = new Stage();
-            stage.setTitle("Детали в заказе");
+            stage.setTitle("Услуги в заказе");
             stage.setResizable(false);
             stage.setScene(scene);
             stage.show();

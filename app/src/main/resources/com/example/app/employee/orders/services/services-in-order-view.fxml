@@ -8,15 +8,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.view.controllers.employee.orders.details.DetailsInOrderController">
+<AnchorPane prefHeight="400.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.view.controllers.employee.orders.services.ServicesInOrderController">
    <children>
-      <Label layoutX="191.0" layoutY="14.0" text="Детали в заказе">
+      <Label layoutX="194.0" layoutY="14.0" text="Услуги в заказе">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Button layoutX="231.0" layoutY="49.0" mnemonicParsing="false" onAction="#addDetailButtonClick" text="Добавить деталь" />
+      <Button layoutX="231.0" layoutY="49.0" mnemonicParsing="false" onAction="#addServiceButtonClick" text="Добавить услугу" />
       <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="10.399999618530273" layoutY="92.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: TRANSPARENT;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="100.0">
          <content>
             <VBox fx:id="primaryLayout" prefHeight="200.0" prefWidth="100.0" spacing="10.0">

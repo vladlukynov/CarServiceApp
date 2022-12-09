@@ -1,9 +1,9 @@
-package com.example.app.view.controllers.employee.orders.details;
+package com.example.app.view.controllers.employee.orders.services;
 
-import com.example.app.entity.Detail;
 import com.example.app.entity.Order;
-import com.example.app.service.DetailService;
+import com.example.app.entity.Service;
 import com.example.app.service.OrderService;
+import com.example.app.service.ServiceService;
 import com.example.app.utils.UIActions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,34 +16,34 @@ import javafx.util.StringConverter;
 import java.sql.SQLException;
 import java.util.List;
 
-public class AddDetailController {
+public class AddServiceController {
     private Order order;
-    private DetailsInOrderController detailsInOrderController;
-    private final DetailService detailService = new DetailService();
+    private ServicesInOrderController serviceInOrderController;
+    private final ServiceService serviceService = new ServiceService();
     private final OrderService orderService = new OrderService();
     @FXML
-    private ComboBox<Detail> detailLabel;
+    private ComboBox<Service> serviceLabel;
     @FXML
     private TextField quantityLabel;
 
     @FXML
     public void initialize() {
         try {
-            List<Detail> details = detailService.getDetails();
-            detailLabel.setConverter(new StringConverter<>() {
+            List<Service> services = serviceService.getServices().stream().filter(Service::isActive).toList();
+            serviceLabel.setConverter(new StringConverter<>() {
                 @Override
-                public String toString(Detail detail) {
-                    return detail.getDetailName();
+                public String toString(Service service) {
+                    return service.getServiceName();
                 }
 
                 @Override
-                public Detail fromString(String s) {
+                public Service fromString(String s) {
                     return null;
                 }
             });
 
-            for (Detail detail : details) {
-                detailLabel.getItems().add(detail);
+            for (Service service : services) {
+                serviceLabel.getItems().add(service);
             }
         } catch (SQLException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
@@ -52,12 +52,12 @@ public class AddDetailController {
 
     @FXML
     public void onApplyButtonClick(ActionEvent event) {
-        if (detailLabel.getSelectionModel().getSelectedItem() == null) {
-            new Alert(Alert.AlertType.INFORMATION, "Укажите деталь", ButtonType.OK).show();
+        if (serviceLabel.getSelectionModel().getSelectedItem() == null) {
+            new Alert(Alert.AlertType.INFORMATION, "Укажите услугу", ButtonType.OK).show();
             return;
         }
 
-        int detailId = detailLabel.getSelectionModel().getSelectedItem().getDetailId();
+        int serviceId = serviceLabel.getSelectionModel().getSelectedItem().getServiceId();
         int quantity;
         try {
             quantity = Integer.parseInt(quantityLabel.getText().trim());
@@ -72,8 +72,8 @@ public class AddDetailController {
         }
 
         try {
-            orderService.addDetailToOrder(order.getOrderId(), detailId, quantity);
-            detailsInOrderController.setInfo(order);
+            orderService.addServiceToOrder(serviceId, order.getOrderId(), quantity);
+            serviceInOrderController.setInfo(order);
             UIActions.getStage(event).close();
         } catch (SQLException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
@@ -85,8 +85,8 @@ public class AddDetailController {
         UIActions.getStage(event).close();
     }
 
-    public void setInfo(Order order, DetailsInOrderController controller) {
-        detailsInOrderController = controller;
+    public void setInfo(Order order, ServicesInOrderController controller) {
+        serviceInOrderController = controller;
         this.order = order;
     }
 }

@@ -30,7 +30,7 @@
       <HBox fx:id="buttons" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0">
          <children>
             <Button mnemonicParsing="false" onAction="#onDetailsButtonClick" text="Детали" />
-            <Button mnemonicParsing="false" text="Услуги" />
+            <Button mnemonicParsing="false" onAction="#onServicesButtonClick" text="Услуги" />
             <Button mnemonicParsing="false" onAction="#onStatusButtonClick" text="Изменить статус" />
             <Button mnemonicParsing="false" onAction="#onDoneButtonClick" text="Завершить" />
          </children>

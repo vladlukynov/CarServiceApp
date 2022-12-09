@@ -169,8 +169,12 @@ CREATE PROCEDURE AddServiceToOrder
     @OrderId INT,
     @Quantity INT
 AS
-    INSERT INTO OrdersServices (OrderId, ServiceId, Quantity)
-        VALUES (@OrderId, @ServiceId, @Quantity);
+    IF EXISTS(SELECT * FROM OrdersServices WHERE OrderId = @OrderId AND ServiceId = @ServiceId)
+        UPDATE OrdersServices SET Quantity = Quantity + @Quantity
+            WHERE ServiceId = @ServiceId AND OrderId = @OrderId;
+    ELSE
+        INSERT INTO OrdersServices (OrderId, ServiceId, Quantity)
+            VALUES (@OrderId, @ServiceId, @Quantity);
 GO
 
 -- 15. Удаление записи из таблицы
