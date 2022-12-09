@@ -142,7 +142,7 @@ CREATE PROCEDURE ChangeOrderStatus
     @OrderId INT,
     @Status BIT
 AS
-    UPDATE Orders SET Status = @Status WHERE Orders.OrderId = @OrderId;
+    UPDATE Orders SET Status = @Status, StatusChangeDate = GETDATE() WHERE Orders.OrderId = @OrderId;
 GO
 
 -- 13. Добавление сотрудника к заказу и изменение статуса этого заказа

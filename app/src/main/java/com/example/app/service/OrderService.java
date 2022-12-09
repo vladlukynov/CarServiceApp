@@ -43,7 +43,9 @@ public class OrderService {
 
             List<OrderElement> orderElements = new ArrayList<>();
             for (Order order_ : orders_) {
-                orderElements.add(new OrderElement(order_.getElement(), order_.getQuantity(), order_.getElementSum()));
+                if (order_.getElement() != null) {
+                    orderElements.add(new OrderElement(order_.getElement(), order_.getQuantity(), order_.getElementSum()));
+                }
             }
             order.setElements(orderElements);
 
