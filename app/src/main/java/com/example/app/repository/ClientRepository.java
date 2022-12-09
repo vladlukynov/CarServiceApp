@@ -44,4 +44,19 @@ public class ClientRepository {
             statement.execute();
         }
     }
+
+    public void editClient(String userLogin, Client client) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password);
+             PreparedStatement statement = connection.prepareStatement("EXEC EditClient '" + userLogin + "',"
+                     + "'" + client.getUserLogin() + "',"
+                     + "'" + client.getPass() + "',"
+                     + "'" + client.getEmail() + "',"
+                     + "'" + client.getPhoneNumber() + "',"
+                     + "N'" + client.getFirstName() + "',"
+                     + "N'" + client.getLastName() + "',"
+                     + "N'" + client.getMiddleName() + "',"
+                     + "'" + client.getBirthday() + "'")) {
+            statement.execute();
+        }
+    }
 }

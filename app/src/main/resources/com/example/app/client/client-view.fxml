@@ -46,7 +46,12 @@
                   <Button mnemonicParsing="false" onAction="#onCarsButtonClick" text="Мои автомобили" />
                </children>
             </HBox>
-            <Button mnemonicParsing="false" onAction="#exitButtonClick" style="-fx-border-color: #f72525;" text="Выйти из аккаунта" textFill="#f72525" />
+            <HBox spacing="10.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onAccountButtonClick" text="Аккаунт" />
+                  <Button mnemonicParsing="false" onAction="#exitButtonClick" style="-fx-border-color: #f72525;" text="Выйти из аккаунта" textFill="#f72525" />
+               </children>
+            </HBox>
          </children>
       </VBox>
       <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="10.0" layoutY="100.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="100.0">

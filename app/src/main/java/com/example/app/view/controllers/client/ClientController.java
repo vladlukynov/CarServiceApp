@@ -134,6 +134,20 @@ public class ClientController {
     }
 
     @FXML
+    public void onAccountButtonClick() {
+        primaryLayout.getChildren().clear();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("client/account-block-view.fxml"));
+            Node node = fxmlLoader.load();
+            AccountBlockController controller = fxmlLoader.getController();
+            controller.setInfo(this);
+            primaryLayout.getChildren().add(node);
+        } catch (IOException exception) {
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
+        }
+    }
+
+    @FXML
     public void exitButtonClick(ActionEvent event) {
         try {
             CarServiceApplication.setUser(null);

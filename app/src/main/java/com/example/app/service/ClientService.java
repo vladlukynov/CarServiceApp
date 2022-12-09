@@ -27,4 +27,8 @@ public class ClientService {
     public void registerClient(Client client) throws SQLException {
         clientRepository.registerClient(client);
     }
+
+    public void editClient(String userLogin, Client newClient) throws SQLException {
+        clientRepository.editClient(userLogin, newClient);
+    }
 }
