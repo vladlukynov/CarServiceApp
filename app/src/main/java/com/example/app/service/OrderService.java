@@ -1,7 +1,9 @@
 package com.example.app.service;
 
+import com.example.app.entity.Detail;
 import com.example.app.entity.Order;
 import com.example.app.entity.OrderElement;
+import com.example.app.exception.NoDetailByIdException;
 import com.example.app.repository.OrderRepository;
 
 import java.sql.SQLException;
@@ -60,5 +62,21 @@ public class OrderService {
             result.add(order);
         }
         return result;
+    }
+
+    public List<Detail> getOrderDetails(int orderId) throws SQLException, NoDetailByIdException {
+        return orderRepository.getOrderDetails(orderId);
+    }
+
+    public int getDetailQuantityInOrder(int orderId, int detailId) throws SQLException {
+        return orderRepository.getDetailQuantityInOrder(orderId, detailId);
+    }
+
+    public void addDetailToOrder(int orderId, int detailId, int quantity) throws SQLException {
+        orderRepository.addDetailToOrder(orderId, detailId, quantity);
+    }
+
+    public void deleteDetailFromOrder(int orderId, int detailId) throws SQLException {
+        orderRepository.deleteDetailFromOrder(orderId, detailId);
     }
 }

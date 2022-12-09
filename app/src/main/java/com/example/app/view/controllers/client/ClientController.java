@@ -48,7 +48,7 @@ public class ClientController {
     @FXML
     public void onServicesButtonClick() {
         try {
-            List<Service> services = serviceService.getServices();
+            List<Service> services = serviceService.getServices().stream().filter(Service::isActive).toList();
 
             primaryLayout.getChildren().clear();
             for (Service service : services) {

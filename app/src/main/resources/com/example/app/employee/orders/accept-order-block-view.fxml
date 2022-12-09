@@ -29,7 +29,7 @@
       <Label fx:id="createLabel" layoutX="14.0" layoutY="165.0" text="Создан: 01.12.2022" textFill="#595959" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0" />
       <HBox fx:id="buttons" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0">
          <children>
-            <Button mnemonicParsing="false" text="Детали" />
+            <Button mnemonicParsing="false" onAction="#onDetailsButtonClick" text="Детали" />
             <Button mnemonicParsing="false" text="Услуги" />
             <Button mnemonicParsing="false" onAction="#onStatusButtonClick" text="Изменить статус" />
             <Button mnemonicParsing="false" onAction="#onDoneButtonClick" text="Завершить" />

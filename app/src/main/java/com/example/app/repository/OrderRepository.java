@@ -1,6 +1,9 @@
 package com.example.app.repository;
 
+import com.example.app.entity.Detail;
 import com.example.app.entity.Order;
+import com.example.app.exception.NoDetailByIdException;
+import com.example.app.service.DetailService;
 
 import java.sql.*;
 import java.util.*;
@@ -8,6 +11,8 @@ import java.util.*;
 import static com.example.app.utils.DatabaseAuth.*;
 
 public class OrderRepository {
+    private final DetailService detailService = new DetailService();
+
     public List<Order> getOrders() throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
              Statement statement = connection.createStatement();
@@ -78,6 +83,48 @@ public class OrderRepository {
              PreparedStatement statement = connection.prepareStatement("EXEC AddEmployeeToOrder " + orderId + ","
                      + "'" + employeeLogin + "',"
                      + "N'" + status + "'")) {
+            statement.execute();
+        }
+    }
+
+    public List<Detail> getOrderDetails(int orderId) throws SQLException, NoDetailByIdException {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password);
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM OrdersDetails WHERE OrderId=" + orderId);
+             ResultSet resultSet = statement.executeQuery()) {
+            List<Detail> details = new ArrayList<>();
+            while (resultSet.next()) {
+                details.add(detailService.getDetail(resultSet.getInt("DetailId")));
+            }
+            return details;
+        }
+    }
+
+    public int getDetailQuantityInOrder(int orderId, int detailId) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password);
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM OrdersDetails WHERE DetailId=" + detailId + " AND "
+                     + "OrderId=" + orderId);
+             ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getInt("Quantity");
+            }
+
+            return 0;
+        }
+    }
+
+    public void addDetailToOrder(int orderId, int detailId, int quantity) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password);
+             PreparedStatement statement = connection.prepareStatement("EXEC AddDetailToOrder2 " + orderId + ","
+                     + detailId + ","
+                     + quantity)) {
+            statement.execute();
+        }
+    }
+
+    public void deleteDetailFromOrder(int orderId, int detailId) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password);
+             PreparedStatement statement = connection.prepareStatement("EXEC DeleteDetailFromOrder2 " + orderId + ","
+                     + detailId)) {
             statement.execute();
         }
     }

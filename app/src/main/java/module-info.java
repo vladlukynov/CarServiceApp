@@ -20,6 +20,8 @@ module com.example.app {
     opens com.example.app.view.controllers.employee.details to javafx.fxml;
     opens com.example.app.view.controllers.employee.services to javafx.fxml;
     opens com.example.app.view.controllers.employee.orders to javafx.fxml;
+    opens com.example.app.view.controllers.employee.orders.details to javafx.fxml;
+    opens com.example.app.view.controllers.employee.orders.services to javafx.fxml;
 
     exports com.example.app;
     exports com.example.app.entity;
@@ -40,4 +42,6 @@ module com.example.app {
     exports com.example.app.view.controllers.employee.details;
     exports com.example.app.view.controllers.employee.services;
     exports com.example.app.view.controllers.employee.orders;
+    exports com.example.app.view.controllers.employee.orders.details;
+    exports com.example.app.view.controllers.employee.orders.services;
 }
