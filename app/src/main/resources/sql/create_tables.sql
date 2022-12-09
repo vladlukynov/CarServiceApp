@@ -37,7 +37,7 @@ CREATE TABLE Services (
 -- Таблица пользователей
 CREATE TABLE Users (
 	UserLogin VARCHAR(30) PRIMARY KEY,
-	Pass VARCHAR(32) NOT NULL,
+	Pass VARCHAR(255) NOT NULL,
 	Email VARCHAR(30) NOT NULL UNIQUE CHECK(Email LIKE '%@%.%'),
 	PhoneNumber VARCHAR(15) NOT NULL UNIQUE CHECK(PhoneNumber LIKE '+7[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'),
 	RoleId INT NOT NULL FOREIGN KEY REFERENCES Roles(RoleId),

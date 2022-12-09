@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import static com.example.app.utils.UIActions.*;
 
@@ -66,6 +67,8 @@ public class RegisterController {
                     users.stream().anyMatch(item -> item.getPhoneNumber().equals(phoneNumber))) {
                 new Alert(Alert.AlertType.INFORMATION, "Почта или телефон уже используются в системе!", ButtonType.OK).show();
             }
+
+            pass = DigestUtils.md5Hex(pass);
 
             Client client = new Client(login, pass, email, phoneNumber, name[1], name[0], name[2], birthday);
 

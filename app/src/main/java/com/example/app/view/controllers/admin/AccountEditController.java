@@ -9,6 +9,7 @@ import com.example.app.utils.UIActions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -86,6 +87,11 @@ public class AccountEditController {
             }
 
             Employee employee = (Employee) CarServiceApplication.getUser();
+            if (!employee.getPass().equals(pass)) {
+                pass = DigestUtils.md5Hex(pass);
+            }
+
+
             Employee newEmployee = new Employee(login, pass, email, phone, employee.getRoleId(),
                     name[1], name[0], name[2], employee.getPost(), employee.getSalary(), birthday);
 

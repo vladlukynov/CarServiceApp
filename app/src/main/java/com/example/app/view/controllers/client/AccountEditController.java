@@ -9,6 +9,7 @@ import com.example.app.utils.UIActions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -84,6 +85,11 @@ public class AccountEditController {
                 new Alert(Alert.AlertType.INFORMATION, "Номер телефона уже используется в системе").show();
                 return;
             }
+
+            if (!CarServiceApplication.getUser().getUserLogin().equals(pass)) {
+                pass = DigestUtils.md5Hex(pass);
+            }
+
             Client newClient = new Client(login, pass, email, phone, name[1], name[0], name[2], birthday);
             clientService.editClient(CarServiceApplication.getUser().getUserLogin(), newClient);
             CarServiceApplication.setUser(newClient);

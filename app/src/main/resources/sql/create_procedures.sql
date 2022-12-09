@@ -263,6 +263,8 @@ AS
     COMMIT;
 GO
 
+EXEC RegisterClient 'client', '12345', 'client@mail.ru', '+79996666666', N'Владислав', N'Лукьянов', N'Петрович', '28.03.2002'
+
 -- 3. Изменение информации о сотруднике и/или его учетных данных по логину сотрудника
 -- Таблицы: Users, Employees
 -- Входные данные: UserLogin, Pass, Email, PhoneNumber, RoleId, FirstName, LastName, MiddleName, Post, Salary, Birthday  

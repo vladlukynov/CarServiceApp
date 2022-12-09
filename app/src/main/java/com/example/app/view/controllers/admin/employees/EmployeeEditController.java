@@ -8,6 +8,7 @@ import com.example.app.view.controllers.admin.AdminController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -109,6 +110,10 @@ public class EmployeeEditController {
             if (employees.stream().anyMatch(item -> item.getEmail().equals(email) && !item.getEmail().equals(employee.getEmail())) ||
                     employees.stream().anyMatch(item -> item.getPhoneNumber().equals(phoneNumber) && !item.getPhoneNumber().equals(employee.getPhoneNumber()))) {
                 new Alert(Alert.AlertType.INFORMATION, "Почта или телефон уже используются в системе!", ButtonType.OK).show();
+            }
+
+            if (!employee.getPass().equals(pass)) {
+                pass = DigestUtils.md5Hex(pass);
             }
 
             Employee newEmployee = new Employee(login, pass, email, phoneNumber, roleId, employee.isActive(),

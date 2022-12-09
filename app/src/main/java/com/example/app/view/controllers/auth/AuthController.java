@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -35,7 +36,7 @@ public class AuthController {
 
         try {
             User user = userService.getUser(login);
-            if (!user.getPass().equals(pass)) {
+            if (!DigestUtils.md5Hex(pass).equals(user.getPass())) {
                 new Alert(Alert.AlertType.ERROR, "Введен не верный пароль!", ButtonType.OK).show();
                 return;
             }

@@ -2,6 +2,7 @@ module com.example.app {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires org.apache.commons.codec;
 
     opens com.example.app to javafx.fxml;
     opens com.example.app.view.controllers.auth to javafx.fxml;

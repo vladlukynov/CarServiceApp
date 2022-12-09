@@ -21,6 +21,8 @@ AS
         JOIN Users ON Clients.UserLogin = Users.UserLogin;
 GO
 
+SELECT * FROM GetClientsInfo
+
 -- 3. Вывод информации о сотрудниках с их учетными данными
 GO
 CREATE VIEW GetEmployeesInfo

@@ -7,6 +7,7 @@ import com.example.app.view.controllers.admin.AdminController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -92,6 +93,7 @@ public class EmployeeAddController {
                 new Alert(Alert.AlertType.INFORMATION, "Почта или телефон уже используются в системе!", ButtonType.OK).show();
             }
 
+            pass = DigestUtils.md5Hex(pass);
             Employee employee = new Employee(login, pass, email, phoneNumber, roleId, true,
                     name[1], name[0], name[2], post, salary, birthday);
 
