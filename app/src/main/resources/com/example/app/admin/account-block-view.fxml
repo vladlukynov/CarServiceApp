@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" spacing="50.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.view.controllers.client.AccountBlockController">
+<VBox alignment="TOP_CENTER" spacing="50.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.app.view.controllers.admin.AccountBlockController">
    <children>
       <Label text="Информация об аккаунте">
          <font>
@@ -16,11 +16,6 @@
       <VBox spacing="5.0">
          <children>
             <Label fx:id="nameLabel" text="ФИО: ">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label fx:id="birthdayLabel" text="Дата рождения:">
                <font>
                   <Font size="16.0" />
                </font>
@@ -36,6 +31,21 @@
                </font>
             </Label>
             <Label fx:id="emailLabel" text="Электронная почта: ">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="postLabel" text="Должность:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="birthdayLabel" text="Дата рождения:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="salaryLabel" text="Заработная плата: ">
                <font>
                   <Font size="16.0" />
                </font>

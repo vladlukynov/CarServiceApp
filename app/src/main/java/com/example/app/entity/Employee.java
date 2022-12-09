@@ -11,6 +11,18 @@ public class Employee extends User {
     private final LocalDate birthday;
 
     public Employee(String userLogin, String pass, String email, String phoneNumber, int roleId,
+                    String firstName, String lastName, String middleName,
+                    String post, double salary, LocalDate birthday) {
+        super(userLogin, pass, email, phoneNumber, roleId, true);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleName = middleName;
+        this.post = post;
+        this.salary = salary;
+        this.birthday = birthday;
+    }
+
+    public Employee(String userLogin, String pass, String email, String phoneNumber, int roleId,
                     boolean isActive, String firstName, String lastName, String middleName,
                     String post, double salary, LocalDate birthday) {
         super(userLogin, pass, email, phoneNumber, roleId, isActive);

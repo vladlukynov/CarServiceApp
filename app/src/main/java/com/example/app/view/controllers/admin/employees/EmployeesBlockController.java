@@ -6,6 +6,7 @@ import com.example.app.exception.NoEmployeeByLoginException;
 import com.example.app.exception.NoRoleByIdException;
 import com.example.app.service.EmployeeService;
 import com.example.app.service.UserService;
+import com.example.app.view.controllers.admin.AdminController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,6 +21,7 @@ import java.sql.SQLException;
 
 public class EmployeesBlockController {
     private Employee employee;
+    private AdminController adminController;
     private final UserService userService = new UserService();
     private final EmployeeService employeeService = new EmployeeService();
     @FXML
@@ -29,7 +31,8 @@ public class EmployeesBlockController {
     @FXML
     private Button isActiveButton;
 
-    public void setInfo(Employee employee_) {
+    public void setInfo(Employee employee_, AdminController controller) {
+        adminController = controller;
         employee = employee_;
         name.setText(employee.getLastName() + " " + employee.getFirstName() + " " + employee.getMiddleName());
         post.setText(employee.getPost());
@@ -63,7 +66,7 @@ public class EmployeesBlockController {
             FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("admin/employees/edit-employee-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             EmployeeEditController controller = fxmlLoader.getController();
-            controller.setInfo(employee, this);
+            controller.setInfo(employee, this, adminController);
             Stage stage = new Stage();
             stage.setTitle("Редактирование");
             stage.setResizable(false);

@@ -1,8 +1,10 @@
 package com.example.app.view.controllers.admin.employees;
 
+import com.example.app.CarServiceApplication;
 import com.example.app.entity.Employee;
 import com.example.app.service.EmployeeService;
 import com.example.app.utils.UIActions;
+import com.example.app.view.controllers.admin.AdminController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -13,6 +15,7 @@ import java.time.Period;
 import java.util.List;
 
 public class EmployeeEditController {
+    private AdminController adminController;
     private Employee employee;
     private EmployeesBlockController employeesBlockController;
     private final EmployeeService employeeService = new EmployeeService();
@@ -40,9 +43,10 @@ public class EmployeeEditController {
         roleLabel.getItems().addAll("Администратор", "Сотрудник");
     }
 
-    public void setInfo(Employee employee_, EmployeesBlockController controller) {
+    public void setInfo(Employee employee_, EmployeesBlockController controller, AdminController adminController) {
         employee = employee_;
         employeesBlockController = controller;
+        this.adminController = adminController;
 
         loginLabel.setText(employee_.getUserLogin());
         passLabel.setText(employee_.getPass());
@@ -110,7 +114,12 @@ public class EmployeeEditController {
             Employee newEmployee = new Employee(login, pass, email, phoneNumber, roleId, employee.isActive(),
                     name[1], name[0], name[2], post, salary, birthday);
             employeeService.updateEmployee(employee.getUserLogin(), newEmployee);
-            employeesBlockController.setInfo(newEmployee);
+            employeesBlockController.setInfo(newEmployee, adminController);
+
+            if (employee.getUserLogin().equals(CarServiceApplication.getUser().getUserLogin())) {
+                CarServiceApplication.setUser(newEmployee);
+                adminController.initialize();
+            }
 
             UIActions.getStage(event).close();
         } catch (SQLException exception) {

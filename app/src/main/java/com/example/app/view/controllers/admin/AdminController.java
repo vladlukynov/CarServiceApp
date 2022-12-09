@@ -43,7 +43,7 @@ public class AdminController {
     private VBox primaryLayout;
 
     @FXML
-    void initialize() {
+    public void initialize() {
         Employee employee = (Employee) CarServiceApplication.getUser();
 
         nameLabel.setText(employee.getLastName() +
@@ -67,7 +67,7 @@ public class AdminController {
                 FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("admin/employees/employees-block-view.fxml"));
                 Node node = fxmlLoader.load();
                 EmployeesBlockController employeesBlockController = fxmlLoader.getController();
-                employeesBlockController.setInfo(employee);
+                employeesBlockController.setInfo(employee, this);
 
                 primaryLayout.getChildren().add(node);
             }
@@ -223,6 +223,20 @@ public class AdminController {
                 primaryLayout.getChildren().add(node);
             }
         } catch (IOException | SQLException exception) {
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
+        }
+    }
+
+    @FXML
+    public void onAccountButtonClick() {
+        primaryLayout.getChildren().clear();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("admin/account-block-view.fxml"));
+            Node node = fxmlLoader.load();
+            AccountBlockController controller = fxmlLoader.getController();
+            controller.setInfo(this);
+            primaryLayout.getChildren().add(node);
+        } catch (IOException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
