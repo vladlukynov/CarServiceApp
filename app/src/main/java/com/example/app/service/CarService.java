@@ -36,7 +36,8 @@ public class CarService {
     }
 
     public void updateCar(Car newCar, int carId) throws SQLException {
-        carRepository.updateCar(newCar, carId);
+        carRepository.addCar(newCar);
+        carRepository.changeCarStatus(carId, 0);
     }
 
     public void addCar(Car car) throws SQLException {

@@ -38,10 +38,10 @@ public class UserService {
     }
 
     public void activateUser(String userLogin) throws SQLException {
-        userRepository.activateUser(userLogin);
+        userRepository.changeUserStatus(userLogin, 1);
     }
 
     public void deactivateUser(String userLogin) throws SQLException {
-        userRepository.deactivateUser(userLogin);
+        userRepository.changeUserStatus(userLogin, 0);
     }
 }

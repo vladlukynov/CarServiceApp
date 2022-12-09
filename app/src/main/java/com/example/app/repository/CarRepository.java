@@ -35,11 +35,6 @@ public class CarRepository {
         }
     }
 
-    public void updateCar(Car newCar, int carId) throws SQLException {
-        addCar(newCar);
-        changeCarStatus(carId, 0);
-    }
-
     public void addCar(Car car) throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
              PreparedStatement statement = connection.prepareStatement("EXEC AddCar '" + car.getManufacturer() + "',"

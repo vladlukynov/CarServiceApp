@@ -32,16 +32,9 @@ public class UserRepository {
         }
     }
 
-    public void activateUser(String userLogin) throws SQLException {
+    public void changeUserStatus(String userLogin, int status) throws SQLException {
         try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             PreparedStatement statement = connection.prepareStatement("EXEC ChangeUserStatus '" + userLogin + "'," + 1)) {
-            statement.execute();
-        }
-    }
-
-    public void deactivateUser(String userLogin) throws SQLException {
-        try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             PreparedStatement statement = connection.prepareStatement("EXEC ChangeUserStatus '" + userLogin + "'," + 0)) {
+             PreparedStatement statement = connection.prepareStatement("EXEC ChangeUserStatus '" + userLogin + "'," + status)) {
             statement.execute();
         }
     }
