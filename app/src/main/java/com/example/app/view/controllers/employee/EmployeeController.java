@@ -10,6 +10,7 @@ import com.example.app.service.OrderService;
 import com.example.app.service.ServiceService;
 import com.example.app.utils.UIActions;
 import com.example.app.view.controllers.employee.details.DetailsBlockController;
+import com.example.app.view.controllers.employee.orders.AcceptOrderBlockController;
 import com.example.app.view.controllers.employee.orders.OrderBlockController;
 import com.example.app.view.controllers.employee.services.ServiceBlockController;
 import javafx.event.ActionEvent;
@@ -18,6 +19,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
@@ -26,6 +28,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class EmployeeController {
+    private int viewTypeIndex = 0;
+
     private final ServiceService serviceService = new ServiceService();
     private final DetailService detailService = new DetailService();
     private final OrderService orderService = new OrderService();
@@ -100,7 +104,39 @@ public class EmployeeController {
 
     @FXML
     public void onMyOrdersButtonClick() {
+        primaryLayout.getChildren().clear();
 
+        ComboBox<String> selectOrderType = new ComboBox<>();
+        selectOrderType.getItems().addAll("Текущие", "Завершенные");
+        selectOrderType.getSelectionModel().select(viewTypeIndex);
+        selectOrderType.setOnAction(event -> {
+            viewTypeIndex = selectOrderType.getSelectionModel().getSelectedIndex();
+            onMyOrdersButtonClick();
+        });
+        primaryLayout.getChildren().add(selectOrderType);
+
+        try {
+            List<Order> orders = orderService.getOrders().stream().filter(order -> {
+                if ((order.getEmployeeLogin() != null) && order.getEmployeeLogin().equals(CarServiceApplication.getUser().getUserLogin())) {
+                    if (selectOrderType.getSelectionModel().getSelectedIndex() == 0) {
+                        return !order.getStatus().equals("Завершен");
+                    }
+                    return order.getStatus().equals("Завершен");
+                }
+                return false;
+            }).toList();
+
+            for (Order order : orders) {
+                FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("employee/orders/accept-order-block-view.fxml"));
+                Node node = fxmlLoader.load();
+                AcceptOrderBlockController controller = fxmlLoader.getController();
+                controller.setInfo(order, this, selectOrderType.getSelectionModel().getSelectedIndex() == 1);
+                primaryLayout.getChildren().add(node);
+            }
+
+        } catch (SQLException | IOException exception) {
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
+        }
     }
 
     @FXML

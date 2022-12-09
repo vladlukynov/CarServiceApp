@@ -7,7 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
 public class OrderStatusEnterController {
-    private OrderBlockController orderBlockController;
+    private OrderBlockInterface orderBlockController;
     @FXML
     private TextField statusLabel;
 
@@ -28,7 +28,7 @@ public class OrderStatusEnterController {
         UIActions.getStage(event).close();
     }
 
-    public void setInfo(OrderBlockController controller) {
+    public void setInfo(OrderBlockInterface controller) {
         this.orderBlockController = controller;
     }
 }

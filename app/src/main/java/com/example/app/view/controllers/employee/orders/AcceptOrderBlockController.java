@@ -16,13 +16,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 
-public class OrderBlockController implements OrderBlockInterface {
+public class AcceptOrderBlockController implements OrderBlockInterface {
     private Order order;
     private EmployeeController employeeController;
     private final CarService carService = new CarService();
@@ -37,34 +38,12 @@ public class OrderBlockController implements OrderBlockInterface {
     @FXML
     private Label statusLabel;
     @FXML
-    private Label createLabel;
-
-    public void setInfo(Order order, EmployeeController controller) {
-        try {
-            this.order = order;
-            this.employeeController = controller;
-            Car car = carService.getCar(order.getCarId());
-
-            nameLabel.setText("Заказ № " + order.getOrderId());
-            carLabel.setText(car.getManufacturer() + " " + car.getCarModel() + " " + car.getReleaseYear() + " " + order.getCarNumber());
-
-            try {
-                Client client = clientService.getClientInfo(order.getClientLogin());
-                clientLabel.setText("Клиент: " + client.getLastName() + " " + client.getFirstName() + " " + client.getMiddleName());
-            } catch (SQLException | NoClientByLoginException exception) {
-                new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
-                return;
-            }
-
-            createLabel.setText("Создан: " + order.getCreationDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
-            statusLabel.setText(order.getStatus() + ", изменен: " + order.getStatusChangeDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
-        } catch (SQLException | NoCarByIdException exception) {
-            new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
-        }
-    }
+    private Label priceLabel;
+    @FXML
+    private HBox buttons;
 
     @FXML
-    public void onStartButtonClick() {
+    public void onStatusButtonClick() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("employee/orders/order-status-enter-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
@@ -80,10 +59,43 @@ public class OrderBlockController implements OrderBlockInterface {
         }
     }
 
+    @FXML
+    public void onDoneButtonClick() {
+        try {
+            orderService.changeOrderStatus(order.getOrderId(), "Завершен");
+            employeeController.onMyOrdersButtonClick();
+        } catch (SQLException exception) {
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
+        }
+    }
+
+    public void setInfo(Order order, EmployeeController controller, boolean isDelete) {
+        this.order = order;
+        this.employeeController = controller;
+
+        try {
+            Car car = carService.getCar(order.getCarId());
+            Client client = clientService.getClientInfo(order.getClientLogin());
+
+            nameLabel.setText("Заказ №" + order.getOrderId());
+            carLabel.setText(car.getManufacturer() + " " + car.getCarModel() + " " + car.getReleaseYear() + " "
+                    + order.getCarNumber());
+            clientLabel.setText("Клиент: " + client.getLastName() + " " + client.getFirstName() + " " + client.getMiddleName());
+            statusLabel.setText(order.getStatus() + ", изменен: " + order.getStatusChangeDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+            priceLabel.setText("Стоимость: " + order.getTotal());
+
+            if (isDelete) {
+                buttons.getChildren().clear();
+            }
+        } catch (SQLException | NoCarByIdException | NoClientByLoginException exception) {
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
+        }
+    }
+
     public void processStartClick(String status) {
         try {
-            orderService.addEmployeeToOrder(order.getOrderId(), CarServiceApplication.getUser().getUserLogin(), status);
-            employeeController.onOrdersButtonClick();
+            orderService.changeOrderStatus(order.getOrderId(), status);
+            employeeController.onMyOrdersButtonClick();
         } catch (SQLException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
