@@ -64,4 +64,21 @@ public class OrderRepository {
             return orders;
         }
     }
+
+    public void changeOrderStatus(int orderId, String status) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password);
+             PreparedStatement statement = connection.prepareStatement("EXEC ChangeOrderStatus " + orderId + ","
+                     + "'" + status + "'")) {
+            statement.execute();
+        }
+    }
+
+    public void addEmployeeToOrder(int orderId, String employeeLogin, String status) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password);
+             PreparedStatement statement = connection.prepareStatement("EXEC AddEmployeeToOrder " + orderId + ","
+                     + "'" + employeeLogin + "',"
+                     + "N'" + status + "'")) {
+            statement.execute();
+        }
+    }
 }

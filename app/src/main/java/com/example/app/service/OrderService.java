@@ -25,6 +25,14 @@ public class OrderService {
         return groupOrders(orderRepository.getClientOrders(clientLogin).stream().collect(Collectors.groupingBy(Order::getOrderId)));
     }
 
+    public void changeOrderStatus(int orderId, String status) throws SQLException {
+        orderRepository.changeOrderStatus(orderId, status);
+    }
+
+    public void addEmployeeToOrder(int orderId, String employeeLogin, String status) throws SQLException {
+        orderRepository.addEmployeeToOrder(orderId, employeeLogin, status);
+    }
+
     private List<Order> groupOrders(Map<Integer, List<Order>> orders) {
         List<Order> result = new ArrayList<>();
 

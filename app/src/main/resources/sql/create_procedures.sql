@@ -140,7 +140,7 @@ GO
 GO
 CREATE PROCEDURE ChangeOrderStatus
     @OrderId INT,
-    @Status BIT
+    @Status NVARCHAR(20)
 AS
     UPDATE Orders SET Status = @Status, StatusChangeDate = GETDATE() WHERE Orders.OrderId = @OrderId;
 GO
