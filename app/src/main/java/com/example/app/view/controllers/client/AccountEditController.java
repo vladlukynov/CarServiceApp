@@ -6,7 +6,6 @@ import com.example.app.entity.User;
 import com.example.app.service.ClientService;
 import com.example.app.service.UserService;
 import com.example.app.utils.UIActions;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -46,7 +45,7 @@ public class AccountEditController {
     }
 
     @FXML
-    public void onApplyButtonClick(ActionEvent event) {
+    public void onApplyButtonClick() {
         String[] name = nameLabel.getText().trim().split(" ");
         String login = loginLabel.getText().trim();
         String pass = passLabel.getText();
@@ -96,15 +95,15 @@ public class AccountEditController {
             new Alert(Alert.AlertType.INFORMATION, "Учетные данные изменены успешно", ButtonType.OK).show();
             clientController.initialize();
             clientController.onAccountButtonClick();
-            UIActions.getStage(event).close();
+            UIActions.getStage(loginLabel).close();
         } catch (SQLException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 
     @FXML
-    public void onCancelButtonClick(ActionEvent event) {
-        UIActions.getStage(event).close();
+    public void onCancelButtonClick() {
+        UIActions.getStage(loginLabel).close();
     }
 
     public void setInfo(ClientController controller) {

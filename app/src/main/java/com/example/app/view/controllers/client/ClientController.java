@@ -11,7 +11,6 @@ import com.example.app.view.controllers.client.cars.CarBlockController;
 import com.example.app.view.controllers.client.details.DetailsBlockController;
 import com.example.app.view.controllers.client.orders.OrderBlockController;
 import com.example.app.view.controllers.client.services.ServiceBlockController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -148,10 +147,10 @@ public class ClientController {
     }
 
     @FXML
-    public void exitButtonClick(ActionEvent event) {
+    public void exitButtonClick() {
         try {
             CarServiceApplication.setUser(null);
-            UIActions.createStage("auth/auth-view.fxml", "Авторизация", UIActions.getStage(event), true);
+            UIActions.createStage("auth/auth-view.fxml", "Авторизация", UIActions.getStage(nameLabel), true);
         } catch (IOException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }

@@ -7,24 +7,22 @@ import com.example.app.service.UserService;
 
 import static com.example.app.utils.UIActions.*;
 
+import com.example.app.utils.UIActions;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
 public class AuthController {
+    private final UserService userService = new UserService();
     @FXML
     private TextField loginField;
     @FXML
     private TextField passField;
-    private final UserService userService = new UserService();
-    private final Stage currentStage = (Stage) Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
 
     @FXML
     protected void onAuthButtonClick() {
@@ -51,9 +49,9 @@ public class AuthController {
             CarServiceApplication.setUser(user);
 
             switch (user.getRoleId()) {
-                case 1 -> createStage("admin/admin-view.fxml", "Администратор", currentStage, true);
-                case 2 -> createStage("employee/employee-view.fxml", "Сотрудник", currentStage, true);
-                case 3 -> createStage("client/client-view.fxml", "Клиент", currentStage, true);
+                case 1 -> createStage("admin/admin-view.fxml", "Администратор", UIActions.getStage(loginField), true);
+                case 2 -> createStage("employee/employee-view.fxml", "Сотрудник", UIActions.getStage(loginField), true);
+                case 3 -> createStage("client/client-view.fxml", "Клиент", UIActions.getStage(loginField), true);
             }
 
         } catch (NoUserByLoginException exception) {
@@ -65,6 +63,6 @@ public class AuthController {
 
     @FXML
     protected void onRegButtonClick() throws IOException {
-        changeScene("auth/register-view.fxml", "Регистрация", currentStage);
+        changeScene("auth/register-view.fxml", "Регистрация", UIActions.getStage(loginField));
     }
 }

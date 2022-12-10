@@ -4,7 +4,6 @@ import com.example.app.entity.Detail;
 import com.example.app.service.DetailService;
 import com.example.app.utils.UIActions;
 import com.example.app.view.controllers.admin.AdminController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -23,12 +22,12 @@ public class DetailsAddController {
     private TextField quantityLabel;
 
     @FXML
-    public void onCancelButtonClick(ActionEvent event) {
-        UIActions.getStage(event).close();
+    public void onCancelButtonClick() {
+        UIActions.getStage(nameLabel).close();
     }
 
     @FXML
-    public void onApplyButtonClick(ActionEvent event) {
+    public void onApplyButtonClick() {
         String name = nameLabel.getText().trim();
         double price;
         int quantity;
@@ -56,7 +55,7 @@ public class DetailsAddController {
             Detail detail = new Detail(name, price, quantity);
             detailService.addDetail(detail);
             adminController.onDetailsButtonClick();
-            UIActions.getStage(event).close();
+            UIActions.getStage(nameLabel).close();
         } catch (SQLException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }

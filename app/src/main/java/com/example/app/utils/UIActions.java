@@ -1,7 +1,6 @@
 package com.example.app.utils;
 
 import com.example.app.CarServiceApplication;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -10,8 +9,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class UIActions {
-    public static Stage getStage(ActionEvent event) {
-        return (Stage) ((Node) event.getSource()).getScene().getWindow();
+    public static Stage getStage(Node node) {
+        return (Stage) node.getScene().getWindow();
     }
 
     public static void changeScene(String view, String title,

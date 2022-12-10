@@ -6,11 +6,8 @@ import com.example.app.entity.User;
 import com.example.app.service.EmployeeService;
 import com.example.app.service.UserService;
 import com.example.app.utils.UIActions;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.sql.SQLException;
@@ -22,7 +19,6 @@ public class AccountEditController {
     private final UserService userService = new UserService();
     private final EmployeeService employeeService = new EmployeeService();
     private AdminController adminController;
-    private final Stage currentStage = (Stage)Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
     @FXML
     private TextField nameLabel;
     @FXML
@@ -49,7 +45,7 @@ public class AccountEditController {
     }
 
     @FXML
-    public void onApplyButtonClick(ActionEvent event) {
+    public void onApplyButtonClick() {
         String[] name = nameLabel.getText().trim().split(" ");
         String login = loginLabel.getText().trim();
         String pass = passLabel.getText();
@@ -104,7 +100,7 @@ public class AccountEditController {
             new Alert(Alert.AlertType.INFORMATION, "Учетные данные изменены успешно", ButtonType.OK).show();
             adminController.initialize();
             adminController.onAccountButtonClick();
-            UIActions.getStage(event).close();
+            UIActions.getStage(nameLabel).close();
         } catch (SQLException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
@@ -112,7 +108,7 @@ public class AccountEditController {
 
     @FXML
     public void onCancelButtonClick() {
-        currentStage.close();
+        UIActions.getStage(nameLabel).close();
     }
 
     public void setInfo(AdminController controller) {

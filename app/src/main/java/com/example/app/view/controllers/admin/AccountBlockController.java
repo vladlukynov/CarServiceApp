@@ -7,15 +7,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
 public class AccountBlockController {
     private AdminController adminController;
-    private final Stage currentStage = (Stage) Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
     @FXML
     private Label nameLabel;
     @FXML
@@ -35,7 +32,7 @@ public class AccountBlockController {
     public void onEditButtonClick() {
         try {
             AccountEditController controller = UIActions.createStage("admin/account-edit-view.fxml", "Редактирование",
-                    currentStage, false);
+                    UIActions.getStage(nameLabel), false);
             controller.setInfo(adminController);
         } catch (IOException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();

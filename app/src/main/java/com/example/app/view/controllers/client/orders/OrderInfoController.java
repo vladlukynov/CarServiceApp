@@ -4,7 +4,6 @@ import com.example.app.CarServiceApplication;
 import com.example.app.entity.Order;
 import com.example.app.entity.OrderElement;
 import com.example.app.utils.UIActions;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -37,7 +36,7 @@ public class OrderInfoController {
     }
 
     @FXML
-    public void onCloseButtonClick(ActionEvent event) {
-        UIActions.getStage(event).close();
+    public void onCloseButtonClick() {
+        UIActions.getStage(titleLabel).close();
     }
 }

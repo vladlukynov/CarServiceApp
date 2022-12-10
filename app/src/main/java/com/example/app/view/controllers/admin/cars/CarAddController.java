@@ -4,7 +4,6 @@ import com.example.app.entity.Car;
 import com.example.app.service.CarService;
 import com.example.app.utils.UIActions;
 import com.example.app.view.controllers.admin.AdminController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -24,7 +23,7 @@ public class CarAddController {
     private TextField yearLabel;
 
     @FXML
-    public void onApplyButtonClick(ActionEvent event) {
+    public void onApplyButtonClick() {
         String manufacturer = manufacturerLabel.getText().trim();
         String model = modelLabel.getText().trim();
         int year;
@@ -49,15 +48,15 @@ public class CarAddController {
             Car car = new Car(manufacturer, model, year, true);
             carService.addCar(car);
             adminController.onCarsButtonClick();
-            UIActions.getStage(event).close();
+            UIActions.getStage(manufacturerLabel).close();
         } catch (SQLException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 
     @FXML
-    public void onCancelButtonClick(ActionEvent event) {
-        UIActions.getStage(event).close();
+    public void onCancelButtonClick() {
+        UIActions.getStage(manufacturerLabel).close();
     }
 
     public void setInfo(AdminController controller) {

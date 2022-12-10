@@ -1,7 +1,6 @@
 package com.example.app.view.controllers.employee.orders;
 
 import com.example.app.utils.UIActions;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -12,7 +11,7 @@ public class OrderStatusEnterController {
     private TextField statusLabel;
 
     @FXML
-    public void onApplyButtonClick(ActionEvent event) {
+    public void onApplyButtonClick() {
         String status = statusLabel.getText().trim();
         if (status.isBlank()) {
             new Alert(Alert.AlertType.INFORMATION, "Введите новый статус услуги").show();
@@ -20,12 +19,12 @@ public class OrderStatusEnterController {
         }
 
         orderBlockController.processStartClick(status);
-        UIActions.getStage(event).close();
+        UIActions.getStage(statusLabel).close();
     }
 
     @FXML
-    public void onCancelButtonClick(ActionEvent event) {
-        UIActions.getStage(event).close();
+    public void onCancelButtonClick() {
+        UIActions.getStage(statusLabel).close();
     }
 
     public void setInfo(OrderBlockInterface controller) {

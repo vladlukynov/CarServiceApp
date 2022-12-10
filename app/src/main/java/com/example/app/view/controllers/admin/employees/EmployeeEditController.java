@@ -5,7 +5,6 @@ import com.example.app.entity.Employee;
 import com.example.app.service.EmployeeService;
 import com.example.app.utils.UIActions;
 import com.example.app.view.controllers.admin.AdminController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -61,12 +60,12 @@ public class EmployeeEditController {
     }
 
     @FXML
-    public void onCloseButtonClick(ActionEvent event) {
-        UIActions.getStage(event).close();
+    public void onCloseButtonClick() {
+        UIActions.getStage(loginLabel).close();
     }
 
     @FXML
-    public void onApplyButtonClick(ActionEvent event) {
+    public void onApplyButtonClick() {
         String login = loginLabel.getText().trim();
         String pass = passLabel.getText();
         String[] name = nameLabel.getText().trim().split(" ");
@@ -126,7 +125,7 @@ public class EmployeeEditController {
                 adminController.initialize();
             }
 
-            UIActions.getStage(event).close();
+            UIActions.getStage(loginLabel).close();
         } catch (SQLException exception) {
             new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
         }

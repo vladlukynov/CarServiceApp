@@ -10,8 +10,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -20,7 +18,6 @@ public class ServiceBlockController {
     private Service service;
     private AdminController adminController;
     private final ServiceService serviceService = new ServiceService();
-    private final Stage currentStage = (Stage) Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
     @FXML
     private Label nameLabel;
     @FXML
@@ -51,8 +48,8 @@ public class ServiceBlockController {
     @FXML
     public void onDescButtonClick() {
         try {
-            ServiceDescriptionController controller=UIActions.createStage("admin/services/service-description-view.fxml", "Описание услуги",
-                    currentStage, false);
+            ServiceDescriptionController controller = UIActions.createStage("admin/services/service-description-view.fxml", "Описание услуги",
+                    UIActions.getStage(nameLabel), false);
             controller.setInfo(service);
         } catch (IOException exception) {
             new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
@@ -62,8 +59,8 @@ public class ServiceBlockController {
     @FXML
     public void onEditButtonClick() {
         try {
-            ServiceEditController controller =UIActions.createStage("admin/services/service-edit-view.fxml", "Редактирование",
-                    currentStage, false);
+            ServiceEditController controller = UIActions.createStage("admin/services/service-edit-view.fxml", "Редактирование",
+                    UIActions.getStage(nameLabel), false);
             controller.setInfo(service, adminController);
         } catch (IOException exception) {
             new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();

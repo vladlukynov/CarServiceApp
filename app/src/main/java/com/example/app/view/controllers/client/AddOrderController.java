@@ -5,7 +5,6 @@ import com.example.app.entity.Car;
 import com.example.app.service.CarService;
 import com.example.app.service.OrderService;
 import com.example.app.utils.UIActions;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -51,7 +50,7 @@ public class AddOrderController {
     }
 
     @FXML
-    public void onApplyButtonClick(ActionEvent event) {
+    public void onApplyButtonClick() {
         Car car = carLabel.getSelectionModel().getSelectedItem();
         String carNumber = carNumberLabel.getText().trim();
 
@@ -63,14 +62,14 @@ public class AddOrderController {
         try {
             orderService.addOrder(car.getCarId(), carNumber, CarServiceApplication.getUser().getUserLogin());
             new Alert(Alert.AlertType.INFORMATION, "Автомобиль успешно записан!", ButtonType.OK).show();
-            UIActions.getStage(event).close();
+            UIActions.getStage(carLabel).close();
         } catch (SQLException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 
     @FXML
-    public void onCancelButtonClick(ActionEvent event) {
-        UIActions.getStage(event).close();
+    public void onCancelButtonClick() {
+        UIActions.getStage(carLabel).close();
     }
 }

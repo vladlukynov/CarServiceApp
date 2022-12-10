@@ -5,7 +5,6 @@ import com.example.app.entity.Order;
 import com.example.app.service.DetailService;
 import com.example.app.service.OrderService;
 import com.example.app.utils.UIActions;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -51,7 +50,7 @@ public class AddDetailController {
     }
 
     @FXML
-    public void onApplyButtonClick(ActionEvent event) {
+    public void onApplyButtonClick() {
         if (detailLabel.getSelectionModel().getSelectedItem() == null) {
             new Alert(Alert.AlertType.INFORMATION, "Укажите деталь", ButtonType.OK).show();
             return;
@@ -74,15 +73,15 @@ public class AddDetailController {
         try {
             orderService.addDetailToOrder(order.getOrderId(), detailId, quantity);
             detailsInOrderController.setInfo(order);
-            UIActions.getStage(event).close();
+            UIActions.getStage(detailLabel).close();
         } catch (SQLException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 
     @FXML
-    public void onCancelButtonClick(ActionEvent event) {
-        UIActions.getStage(event).close();
+    public void onCancelButtonClick() {
+        UIActions.getStage(detailLabel).close();
     }
 
     public void setInfo(Order order, DetailsInOrderController controller) {

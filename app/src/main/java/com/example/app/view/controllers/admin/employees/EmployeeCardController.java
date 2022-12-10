@@ -4,7 +4,6 @@ import com.example.app.entity.Employee;
 import com.example.app.exception.NoRoleByIdException;
 import com.example.app.utils.Roles;
 import com.example.app.utils.UIActions;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -43,7 +42,7 @@ public class EmployeeCardController {
     }
 
     @FXML
-    public void onCloseButtonClick(ActionEvent event) {
-        UIActions.getStage(event).close();
+    public void onCloseButtonClick() {
+        UIActions.getStage(loginLabel).close();
     }
 }

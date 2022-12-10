@@ -13,7 +13,6 @@ import com.example.app.view.controllers.employee.details.DetailsBlockController;
 import com.example.app.view.controllers.employee.orders.AcceptOrderBlockController;
 import com.example.app.view.controllers.employee.orders.OrderBlockController;
 import com.example.app.view.controllers.employee.services.ServiceBlockController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -154,10 +153,10 @@ public class EmployeeController {
     }
 
     @FXML
-    public void onExitButtonClick(ActionEvent event) {
+    public void onExitButtonClick() {
         try {
             CarServiceApplication.setUser(null);
-            UIActions.createStage("auth/auth-view.fxml", "Авторизация", UIActions.getStage(event), true);
+            UIActions.createStage("auth/auth-view.fxml", "Авторизация", UIActions.getStage(nameLabel), true);
         } catch (IOException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }

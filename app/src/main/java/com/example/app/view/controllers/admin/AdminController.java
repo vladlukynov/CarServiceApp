@@ -13,7 +13,6 @@ import com.example.app.view.controllers.admin.employees.EmployeesBlockController
 import com.example.app.view.controllers.admin.orders.OrderBlockController;
 import com.example.app.view.controllers.admin.services.ServiceAddController;
 import com.example.app.view.controllers.admin.services.ServiceBlockController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -22,8 +21,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -35,8 +32,6 @@ public class AdminController {
     private final ServiceService serviceService = new ServiceService();
     private final DetailService detailService = new DetailService();
     private final OrderService orderService = new OrderService();
-    private final Stage currentStage = (Stage) Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
-
     @FXML
     private Label nameLabel;
     @FXML
@@ -82,7 +77,7 @@ public class AdminController {
     public void onEmployeeAddButtonClick() {
         try {
             EmployeeAddController controller = UIActions.createStage("admin/employees/add-employee-view.fxml", "Регистрация сотрудника",
-                    currentStage, true);
+                    UIActions.getStage(nameLabel), true);
             controller.setInfo(this);
         } catch (IOException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
@@ -116,7 +111,7 @@ public class AdminController {
     public void onAddCarButtonClick() {
         try {
             CarAddController carAddController = UIActions.createStage("admin/cars/car-add-view.fxml", "Добавление автомобиля",
-                    currentStage, false);
+                    UIActions.getStage(nameLabel), false);
             carAddController.setInfo(this);
         } catch (IOException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
@@ -148,7 +143,7 @@ public class AdminController {
     public void onServiceAddButtonClick() {
         try {
             ServiceAddController controller = UIActions.createStage("admin/services/service-add-view.fxml", "Добавить услугу",
-                    currentStage, false);
+                    UIActions.getStage(nameLabel), false);
             controller.setInfo(this);
         } catch (IOException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
@@ -180,7 +175,7 @@ public class AdminController {
     public void onDetailsAddButtonClick() {
         try {
             DetailsAddController controller = UIActions.createStage("admin/details/details-add-view.fxml", "Добавить деталь",
-                    currentStage, false);
+                    UIActions.getStage(nameLabel), false);
             controller.setInfo(this);
         } catch (IOException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
@@ -220,10 +215,10 @@ public class AdminController {
     }
 
     @FXML
-    public void exitButtonClick(ActionEvent event) {
+    public void exitButtonClick() {
         try {
             CarServiceApplication.setUser(null);
-            UIActions.createStage("auth/auth-view.fxml", "Авторизация", UIActions.getStage(event), true);
+            UIActions.createStage("auth/auth-view.fxml", "Авторизация", UIActions.getStage(nameLabel), true);
         } catch (IOException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }

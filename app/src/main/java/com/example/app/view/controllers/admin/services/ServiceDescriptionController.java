@@ -1,13 +1,11 @@
 package com.example.app.view.controllers.admin.services;
 
 import com.example.app.entity.Service;
+import com.example.app.utils.UIActions;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 
 public class ServiceDescriptionController {
-    private final Stage currentStage = (Stage) Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
     @FXML
     private Label nameLabel;
     @FXML
@@ -20,6 +18,6 @@ public class ServiceDescriptionController {
 
     @FXML
     public void onCloseButtonClick() {
-        currentStage.close();
+        UIActions.getStage(nameLabel).close();
     }
 }
