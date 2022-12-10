@@ -4,7 +4,6 @@ import com.example.app.CarServiceApplication;
 import com.example.app.entity.User;
 import com.example.app.exception.NoUserByLoginException;
 import com.example.app.service.UserService;
-import javafx.event.ActionEvent;
 
 import static com.example.app.utils.UIActions.*;
 
@@ -12,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.IOException;
@@ -23,9 +24,10 @@ public class AuthController {
     @FXML
     private TextField passField;
     private final UserService userService = new UserService();
+    private final Stage currentStage = (Stage) Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
 
     @FXML
-    protected void onAuthButtonClick(ActionEvent event) {
+    protected void onAuthButtonClick() {
         String login = loginField.getText().trim();
         String pass = passField.getText();
 
@@ -49,9 +51,9 @@ public class AuthController {
             CarServiceApplication.setUser(user);
 
             switch (user.getRoleId()) {
-                case 1 -> swapStage("admin/admin-view.fxml", "Администратор", getStage(event));
-                case 2 -> swapStage("employee/employee-view.fxml", "Сотрудник", getStage(event));
-                case 3 -> swapStage("client/client-view.fxml", "Клиент", getStage(event));
+                case 1 -> createStage("admin/admin-view.fxml", "Администратор", currentStage, true);
+                case 2 -> createStage("employee/employee-view.fxml", "Сотрудник", currentStage, true);
+                case 3 -> createStage("client/client-view.fxml", "Клиент", currentStage, true);
             }
 
         } catch (NoUserByLoginException exception) {
@@ -62,7 +64,7 @@ public class AuthController {
     }
 
     @FXML
-    protected void onRegButtonClick(ActionEvent event) throws IOException {
-        changeScene("auth/register-view.fxml", "Регистрация", getStage(event));
+    protected void onRegButtonClick() throws IOException {
+        changeScene("auth/register-view.fxml", "Регистрация", currentStage);
     }
 }

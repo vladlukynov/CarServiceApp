@@ -17,13 +17,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -35,6 +35,8 @@ public class AdminController {
     private final ServiceService serviceService = new ServiceService();
     private final DetailService detailService = new DetailService();
     private final OrderService orderService = new OrderService();
+    private final Stage currentStage = (Stage) Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
+
     @FXML
     private Label nameLabel;
     @FXML
@@ -76,18 +78,12 @@ public class AdminController {
         }
     }
 
+    @FXML
     public void onEmployeeAddButtonClick() {
         try {
-            Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("admin/employees/add-employee-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            EmployeeAddController controller = fxmlLoader.getController();
+            EmployeeAddController controller = UIActions.createStage("admin/employees/add-employee-view.fxml", "Регистрация сотрудника",
+                    currentStage, true);
             controller.setInfo(this);
-            stage.setScene(scene);
-            stage.setTitle("Регистрация сотрудника");
-            stage.setResizable(false);
-
-            stage.show();
         } catch (IOException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
@@ -119,15 +115,9 @@ public class AdminController {
 
     public void onAddCarButtonClick() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("admin/cars/car-add-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            CarAddController carAddController = fxmlLoader.getController();
+            CarAddController carAddController = UIActions.createStage("admin/cars/car-add-view.fxml", "Добавление автомобиля",
+                    currentStage, false);
             carAddController.setInfo(this);
-            Stage stage = new Stage();
-            stage.setTitle("Добавление автомобиля");
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.show();
         } catch (IOException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
@@ -157,15 +147,9 @@ public class AdminController {
 
     public void onServiceAddButtonClick() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("admin/services/service-add-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            ServiceAddController controller = fxmlLoader.getController();
+            ServiceAddController controller = UIActions.createStage("admin/services/service-add-view.fxml", "Добавить услугу",
+                    currentStage, false);
             controller.setInfo(this);
-            Stage stage = new Stage();
-            stage.setTitle("Добавить услугу");
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.show();
         } catch (IOException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
@@ -195,15 +179,9 @@ public class AdminController {
 
     public void onDetailsAddButtonClick() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("admin/details/details-add-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            DetailsAddController controller = fxmlLoader.getController();
+            DetailsAddController controller = UIActions.createStage("admin/details/details-add-view.fxml", "Добавить деталь",
+                    currentStage, false);
             controller.setInfo(this);
-            Stage stage = new Stage();
-            stage.setTitle("Добавить деталь");
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.show();
         } catch (IOException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
@@ -245,7 +223,7 @@ public class AdminController {
     public void exitButtonClick(ActionEvent event) {
         try {
             CarServiceApplication.setUser(null);
-            UIActions.swapStage("auth/auth-view.fxml", "Авторизация", UIActions.getStage(event));
+            UIActions.createStage("auth/auth-view.fxml", "Авторизация", UIActions.getStage(event), true);
         } catch (IOException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }

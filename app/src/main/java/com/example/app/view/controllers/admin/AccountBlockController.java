@@ -2,19 +2,20 @@ package com.example.app.view.controllers.admin;
 
 import com.example.app.CarServiceApplication;
 import com.example.app.entity.Employee;
+import com.example.app.utils.UIActions;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
 public class AccountBlockController {
     private AdminController adminController;
+    private final Stage currentStage = (Stage) Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
     @FXML
     private Label nameLabel;
     @FXML
@@ -33,16 +34,9 @@ public class AccountBlockController {
     @FXML
     public void onEditButtonClick() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource("admin/account-edit-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            AccountEditController controller = fxmlLoader.getController();
+            AccountEditController controller = UIActions.createStage("admin/account-edit-view.fxml", "Редактирование",
+                    currentStage, false);
             controller.setInfo(adminController);
-
-            Stage stage = new Stage();
-            stage.setTitle("Редактирование");
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.show();
         } catch (IOException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }

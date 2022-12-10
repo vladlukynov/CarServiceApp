@@ -151,7 +151,7 @@ public class ClientController {
     public void exitButtonClick(ActionEvent event) {
         try {
             CarServiceApplication.setUser(null);
-            UIActions.swapStage("auth/auth-view.fxml", "Авторизация", UIActions.getStage(event));
+            UIActions.createStage("auth/auth-view.fxml", "Авторизация", UIActions.getStage(event), true);
         } catch (IOException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }

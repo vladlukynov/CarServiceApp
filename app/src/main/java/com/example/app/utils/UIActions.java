@@ -24,7 +24,7 @@ public class UIActions {
         stage.setScene(scene);
     }
 
-    public static void swapStage(String view, String title, Stage oldStage) throws IOException {
+    public static <T> T createStage(String view, String title, Stage oldStage, boolean closeCurrentStage) throws IOException {
         Stage newStage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(CarServiceApplication.class.getResource(view));
         Scene scene = new Scene(fxmlLoader.load());
@@ -32,7 +32,11 @@ public class UIActions {
         newStage.setResizable(false);
         newStage.setScene(scene);
 
-        oldStage.close();
+        if (closeCurrentStage) {
+            oldStage.close();
+        }
+
         newStage.show();
+        return fxmlLoader.getController();
     }
 }

@@ -9,6 +9,8 @@ import com.example.app.utils.UIActions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.sql.SQLException;
@@ -20,6 +22,7 @@ public class AccountEditController {
     private final UserService userService = new UserService();
     private final EmployeeService employeeService = new EmployeeService();
     private AdminController adminController;
+    private final Stage currentStage = (Stage)Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
     @FXML
     private TextField nameLabel;
     @FXML
@@ -108,8 +111,8 @@ public class AccountEditController {
     }
 
     @FXML
-    public void onCancelButtonClick(ActionEvent event) {
-        UIActions.getStage(event).close();
+    public void onCancelButtonClick() {
+        currentStage.close();
     }
 
     public void setInfo(AdminController controller) {

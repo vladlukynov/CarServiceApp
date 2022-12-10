@@ -4,12 +4,13 @@ import com.example.app.entity.Client;
 import com.example.app.entity.User;
 import com.example.app.service.ClientService;
 import com.example.app.service.UserService;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import static com.example.app.utils.UIActions.*;
@@ -21,6 +22,9 @@ import java.time.Period;
 import java.util.List;
 
 public class RegisterController {
+    private final Stage currentStage = (Stage) Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
+    private final UserService userService = new UserService();
+    private final ClientService clientService = new ClientService();
     @FXML
     private TextField loginField;
     @FXML
@@ -33,11 +37,9 @@ public class RegisterController {
     private TextField phoneField;
     @FXML
     private DatePicker dateField;
-    private final UserService userService = new UserService();
-    private final ClientService clientService = new ClientService();
 
     @FXML
-    protected void onRegButtonClick(ActionEvent event) {
+    protected void onRegButtonClick() {
         String login = loginField.getText().trim();
         String pass = passField.getText();
         String[] name = nameField.getText().trim().split(" ");
@@ -74,14 +76,14 @@ public class RegisterController {
 
             clientService.registerClient(client);
             new Alert(Alert.AlertType.INFORMATION, "Успешная регистрация", ButtonType.OK).show();
-            changeScene("auth/auth-view.fxml", "Авторизация", getStage(event));
+            changeScene("auth/auth-view.fxml", "Авторизация", currentStage);
         } catch (SQLException | IOException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
         }
     }
 
     @FXML
-    protected void onBackButtonClick(ActionEvent event) throws IOException {
-        changeScene("auth/auth-view.fxml", "Авторизация", getStage(event));
+    protected void onBackButtonClick() throws IOException {
+        changeScene("auth/auth-view.fxml", "Авторизация", currentStage);
     }
 }

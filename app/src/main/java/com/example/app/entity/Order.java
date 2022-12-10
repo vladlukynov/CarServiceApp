@@ -107,7 +107,7 @@ public class Order {
                 "orderId=" + orderId +
                 ", carId=" + carId +
                 ", carNumber='" + carNumber + '\'' +
-                ", stattus='" + status + '\'' +
+                ", status='" + status + '\'' +
                 ", creationDate=" + creationDate +
                 ", statusChangeDate=" + statusChangeDate +
                 ", employeeLogin='" + employeeLogin + '\'' +
