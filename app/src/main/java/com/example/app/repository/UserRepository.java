@@ -10,15 +10,15 @@ import java.util.List;
 
 public class UserRepository {
     public List<User> getUsers() throws SQLException {
-        try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             PreparedStatement statement = connection.prepareStatement("""
-                     SELECT UserLogin, Pass, Email, PhoneNumber, RoleId, IsActive FROM GetEmployeesInfo
-                     UNION
-                     SELECT UserLogin, Pass, Email, PhoneNumber, RoleId, IsActive FROM GetClientsInfo
-                     """);
-             ResultSet resultSet = statement.executeQuery()) {
-            List<User> list = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(URL, userName, password)) {
+            PreparedStatement statement = connection.prepareStatement("""
+                    SELECT UserLogin, Pass, Email, PhoneNumber, RoleId, IsActive FROM GetEmployeesInfo
+                    UNION
+                    SELECT UserLogin, Pass, Email, PhoneNumber, RoleId, IsActive FROM GetClientsInfo
+                    """);
+            ResultSet resultSet = statement.executeQuery();
 
+            List<User> list = new ArrayList<>();
             while (resultSet.next()) {
                 list.add(new User(resultSet.getString("UserLogin"),
                         resultSet.getString("Pass"),
@@ -27,14 +27,16 @@ public class UserRepository {
                         resultSet.getInt("RoleId"),
                         resultSet.getBoolean("IsActive")));
             }
-
             return list;
         }
     }
 
     public void changeUserStatus(String userLogin, int status) throws SQLException {
-        try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             PreparedStatement statement = connection.prepareStatement("EXEC ChangeUserStatus '" + userLogin + "'," + status)) {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password)) {
+            PreparedStatement statement = connection.prepareStatement("EXEC ChangeUserStatus ?,?");
+            statement.setString(1, userLogin);
+            statement.setInt(2, status);
+
             statement.execute();
         }
     }

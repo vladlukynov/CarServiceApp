@@ -26,23 +26,4 @@ module com.example.app {
 
     exports com.example.app;
     exports com.example.app.entity;
-    exports com.example.app.view.controllers.auth;
-    exports com.example.app.view.controllers.admin;
-    exports com.example.app.exception;
-    exports com.example.app.view.controllers.admin.employees;
-    exports com.example.app.view.controllers.admin.cars;
-    exports com.example.app.view.controllers.admin.services;
-    exports com.example.app.view.controllers.admin.details;
-    exports com.example.app.view.controllers.admin.orders;
-    exports com.example.app.view.controllers.client;
-    exports com.example.app.view.controllers.client.details;
-    exports com.example.app.view.controllers.client.services;
-    exports com.example.app.view.controllers.client.orders;
-    exports com.example.app.view.controllers.client.cars;
-    exports com.example.app.view.controllers.employee;
-    exports com.example.app.view.controllers.employee.details;
-    exports com.example.app.view.controllers.employee.services;
-    exports com.example.app.view.controllers.employee.orders;
-    exports com.example.app.view.controllers.employee.orders.details;
-    exports com.example.app.view.controllers.employee.orders.services;
 }

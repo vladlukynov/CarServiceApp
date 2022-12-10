@@ -18,83 +18,60 @@ public class OrderRepository {
     private final ServiceService serviceService = new ServiceService();
 
     public List<Order> getOrders() throws SQLException {
-        try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM GetOrdersWithSum")) {
-            List<Order> orders = new ArrayList<>();
-            while (resultSet.next()) {
-                Order order = new Order(resultSet.getInt("OrderId"),
-                        resultSet.getInt("CarId"),
-                        resultSet.getString("CarNumber"),
-                        resultSet.getString("Status"),
-                        resultSet.getDate("CreationDate").toLocalDate(),
-                        resultSet.getDate("StatusChangeDate").toLocalDate(),
-                        resultSet.getString("EmployeeLogin"),
-                        resultSet.getString("ClientLogin"),
-                        resultSet.getString("Element"),
-                        resultSet.getInt("Quantity"),
-                        resultSet.getDouble("ElementSum"),
-                        resultSet.getDouble("Total"));
+        try (Connection connection = DriverManager.getConnection(URL, userName, password)) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM GetOrdersWithSum");
 
-                orders.add(order);
-            }
-            return orders;
+            return processOrderLists(statement.executeQuery());
         }
     }
 
     public void addOrder(int carId, String carNumber, String clientLogin) throws SQLException {
-        try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             PreparedStatement statement = connection.prepareStatement("EXEC AddOrder " + carId + ","
-                     + "'" + carNumber + "',"
-                     + "'" + clientLogin + "'")) {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password)) {
+            PreparedStatement statement = connection.prepareStatement("EXEC AddOrder ?,?,?");
+            statement.setInt(1, carId);
+            statement.setString(2, carNumber);
+            statement.setString(3, clientLogin);
+
             statement.execute();
         }
     }
 
     public List<Order> getClientOrders(String clientLogin) throws SQLException {
-        try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             PreparedStatement statement = connection.prepareStatement("EXEC GetClientOrdersWithSum '" + clientLogin + "'");
-             ResultSet resultSet = statement.executeQuery()) {
-            List<Order> orders = new ArrayList<>();
-            while (resultSet.next()) {
-                orders.add(new Order(resultSet.getInt("OrderId"),
-                        resultSet.getInt("CarId"),
-                        resultSet.getString("CarNumber"),
-                        resultSet.getString("Status"),
-                        resultSet.getDate("CreationDate").toLocalDate(),
-                        resultSet.getDate("StatusChangeDate").toLocalDate(),
-                        resultSet.getString("EmployeeLogin"),
-                        resultSet.getString("ClientLogin"),
-                        resultSet.getString("Element"),
-                        resultSet.getInt("Quantity"),
-                        resultSet.getDouble("ElementSum"),
-                        resultSet.getDouble("Total")));
-            }
-            return orders;
+        try (Connection connection = DriverManager.getConnection(URL, userName, password)) {
+            PreparedStatement statement = connection.prepareStatement("EXEC GetClientOrdersWithSum ?");
+            statement.setString(1, clientLogin);
+
+            return processOrderLists(statement.executeQuery());
         }
     }
 
     public void changeOrderStatus(int orderId, String status) throws SQLException {
-        try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             PreparedStatement statement = connection.prepareStatement("EXEC ChangeOrderStatus " + orderId + ","
-                     + "'" + status + "'")) {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password)) {
+            PreparedStatement statement = connection.prepareStatement("EXEC ChangeOrderStatus ?,?");
+            statement.setInt(1, orderId);
+            statement.setString(2, status);
+
             statement.execute();
         }
     }
 
     public void addEmployeeToOrder(int orderId, String employeeLogin, String status) throws SQLException {
-        try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             PreparedStatement statement = connection.prepareStatement("EXEC AddEmployeeToOrder " + orderId + ","
-                     + "'" + employeeLogin + "',"
-                     + "N'" + status + "'")) {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password)) {
+            PreparedStatement statement = connection.prepareStatement("EXEC AddEmployeeToOrder ?,?,?");
+            statement.setInt(1, orderId);
+            statement.setString(2, employeeLogin);
+            statement.setString(3, status);
+
             statement.execute();
         }
     }
 
     public List<Detail> getOrderDetails(int orderId) throws SQLException, NoDetailByIdException {
-        try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM OrdersDetails WHERE OrderId=" + orderId);
-             ResultSet resultSet = statement.executeQuery()) {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password)) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM OrdersDetails WHERE OrderId=?");
+            statement.setInt(1, orderId);
+            ResultSet resultSet = statement.executeQuery();
+
             List<Detail> details = new ArrayList<>();
             while (resultSet.next()) {
                 details.add(detailService.getDetail(resultSet.getInt("DetailId")));
@@ -104,9 +81,11 @@ public class OrderRepository {
     }
 
     public List<Service> getOrdersServices(int orderId) throws SQLException, NoServiceByIdException {
-        try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM OrdersServices WHERE OrderId=" + orderId);
-             ResultSet resultSet = statement.executeQuery()) {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password)) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM OrdersServices WHERE OrderId=?");
+            statement.setInt(1, orderId);
+            ResultSet resultSet = statement.executeQuery();
+
             List<Service> services = new ArrayList<>();
             while (resultSet.next()) {
                 services.add(serviceService.getService(resultSet.getInt("ServiceId")));
@@ -116,62 +95,85 @@ public class OrderRepository {
     }
 
     public int getDetailQuantityInOrder(int orderId, int detailId) throws SQLException {
-        try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM OrdersDetails WHERE DetailId=" + detailId + " AND "
-                     + "OrderId=" + orderId);
-             ResultSet resultSet = statement.executeQuery()) {
-            if (resultSet.next()) {
-                return resultSet.getInt("Quantity");
-            }
+        try (Connection connection = DriverManager.getConnection(URL, userName, password)) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM OrdersDetails WHERE DetailId=? AND OrderId=?");
+            statement.setInt(1, detailId);
+            statement.setInt(2, orderId);
+            ResultSet resultSet = statement.executeQuery();
 
-            return 0;
+            return resultSet.next() ? resultSet.getInt("Quantity") : 0;
         }
     }
 
     public void addDetailToOrder(int orderId, int detailId, int quantity) throws SQLException {
-        try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             PreparedStatement statement = connection.prepareStatement("EXEC AddDetailToOrder2 " + orderId + ","
-                     + detailId + ","
-                     + quantity)) {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password)) {
+            PreparedStatement statement = connection.prepareStatement("EXEC AddDetailToOrder2 ?,?,?");
+            statement.setInt(1, orderId);
+            statement.setInt(2, detailId);
+            statement.setInt(3, quantity);
+
             statement.execute();
         }
     }
 
     public void deleteDetailFromOrder(int orderId, int detailId) throws SQLException {
-        try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             PreparedStatement statement = connection.prepareStatement("EXEC DeleteDetailFromOrder2 " + orderId + ","
-                     + detailId)) {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password)) {
+            PreparedStatement statement = connection.prepareStatement("EXEC DeleteDetailFromOrder2 ?,?");
+            statement.setInt(1, orderId);
+            statement.setInt(2, detailId);
+
             statement.execute();
         }
     }
 
     public void addServiceToOrder(int serviceId, int orderId, int quantity) throws SQLException {
-        try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             PreparedStatement statement = connection.prepareStatement("EXEC AddServiceToOrder " + serviceId + ","
-                     + orderId + ","
-                     + quantity)) {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password)) {
+            PreparedStatement statement = connection.prepareStatement("EXEC AddServiceToOrder ?,?,?");
+            statement.setInt(1, serviceId);
+            statement.setInt(2, orderId);
+            statement.setInt(3, quantity);
+
             statement.execute();
         }
     }
 
     public void deleteServiceFromOrder(int serviceId, int orderId) throws SQLException {
-        try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             PreparedStatement statement = connection.prepareStatement("EXEC DeleteServiceFromOrder " + serviceId + ","
-                     + orderId)) {
+        try (Connection connection = DriverManager.getConnection(URL, userName, password)) {
+            PreparedStatement statement = connection.prepareStatement("EXEC DeleteServiceFromOrder ?,?");
+            statement.setInt(1, serviceId);
+            statement.setInt(2, orderId);
+
             statement.execute();
         }
     }
 
     public int getServiceQuantityInOrder(int orderId, int serviceId) throws SQLException {
-        try (Connection connection = DriverManager.getConnection(URL, userName, password);
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM OrdersServices WHERE ServiceId=" + serviceId + " AND "
-                     + "OrderId=" + orderId);
-             ResultSet resultSet = statement.executeQuery()) {
-            if (resultSet.next()) {
-                return resultSet.getInt("Quantity");
-            }
+        try (Connection connection = DriverManager.getConnection(URL, userName, password)) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM OrdersServices WHERE ServiceId=? AND OrderId=?");
+            statement.setInt(1, serviceId);
+            statement.setInt(2, orderId);
+            ResultSet resultSet = statement.executeQuery();
 
-            return 0;
+            return resultSet.next() ? resultSet.getInt("Quantity") : 0;
         }
+    }
+
+    private static List<Order> processOrderLists(ResultSet resultSet) throws SQLException {
+        List<Order> orders = new ArrayList<>();
+        while (resultSet.next()) {
+            orders.add(new Order(resultSet.getInt("OrderId"),
+                    resultSet.getInt("CarId"),
+                    resultSet.getString("CarNumber"),
+                    resultSet.getString("Status"),
+                    resultSet.getDate("CreationDate").toLocalDate(),
+                    resultSet.getDate("StatusChangeDate").toLocalDate(),
+                    resultSet.getString("EmployeeLogin"),
+                    resultSet.getString("ClientLogin"),
+                    resultSet.getString("Element"),
+                    resultSet.getInt("Quantity"),
+                    resultSet.getDouble("ElementSum"),
+                    resultSet.getDouble("Total")));
+        }
+        return orders;
     }
 }
