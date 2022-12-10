@@ -85,7 +85,7 @@ public class AccountEditController {
                 return;
             }
 
-            if (!CarServiceApplication.getUser().getUserLogin().equals(pass)) {
+            if (!CarServiceApplication.getUser().getPass().equals(pass)) {
                 pass = DigestUtils.md5Hex(pass);
             }
 

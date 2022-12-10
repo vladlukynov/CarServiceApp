@@ -89,7 +89,7 @@ public class EmployeesBlockController {
             stage.setResizable(false);
             stage.setScene(scene);
             stage.show();
-        } catch (IOException | NoRoleByIdException exception) {
+        } catch (IOException | NoRoleByIdException | SQLException exception) {
             new Alert(Alert.AlertType.INFORMATION, exception.getMessage(), ButtonType.OK).show();
         }
     }

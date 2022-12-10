@@ -1,11 +1,14 @@
 package com.example.app.view.controllers.admin.employees;
 
 import com.example.app.entity.Employee;
+import com.example.app.entity.Role;
 import com.example.app.service.EmployeeService;
+import com.example.app.service.RoleService;
 import com.example.app.utils.UIActions;
 import com.example.app.view.controllers.admin.AdminController;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.StringConverter;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.sql.SQLException;
@@ -15,6 +18,7 @@ import java.util.List;
 
 public class EmployeeAddController {
     private final EmployeeService employeeService = new EmployeeService();
+    private final RoleService roleService = new RoleService();
     private AdminController adminController;
     @FXML
     private TextField loginLabel;
@@ -27,7 +31,7 @@ public class EmployeeAddController {
     @FXML
     private TextField phoneLabel;
     @FXML
-    private ComboBox<String> roleLabel;
+    private ComboBox<Role> roleLabel;
     @FXML
     private TextField postLabel;
     @FXML
@@ -37,7 +41,24 @@ public class EmployeeAddController {
 
     @FXML
     public void initialize() {
-        roleLabel.getItems().addAll("Администратор", "Сотрудник");
+        roleLabel.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(Role role) {
+                return role.getRoleName();
+            }
+
+            @Override
+            public Role fromString(String s) {
+                return null;
+            }
+        });
+
+        try {
+            roleLabel.getItems().add(roleService.getRoleByName("Администратор"));
+            roleLabel.getItems().add(roleService.getRoleByName("Сотрудник"));
+        } catch (SQLException exception) {
+            new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
+        }
     }
 
     @FXML
@@ -52,7 +73,7 @@ public class EmployeeAddController {
         String[] name = nameLabel.getText().trim().split(" ");
         String email = emailLabel.getText().trim().trim();
         String phoneNumber = phoneLabel.getText().trim();
-        int roleId = roleLabel.getSelectionModel().getSelectedIndex() + 1;
+        int roleId = roleLabel.getSelectionModel().getSelectedItem().getRoleId();
         double salary;
         String post = postLabel.getText().trim();
         LocalDate birthday = birthdayLabel.getValue();

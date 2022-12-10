@@ -2,14 +2,16 @@ package com.example.app.view.controllers.admin.employees;
 
 import com.example.app.entity.Employee;
 import com.example.app.exception.NoRoleByIdException;
-import com.example.app.utils.Roles;
+import com.example.app.service.RoleService;
 import com.example.app.utils.UIActions;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
+import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 
 public class EmployeeCardController {
+    private final RoleService roleService = new RoleService();
     @FXML
     private Label loginLabel;
     @FXML
@@ -29,12 +31,12 @@ public class EmployeeCardController {
     @FXML
     private Label birthdayLabel;
 
-    public void setInfo(Employee employee_) throws NoRoleByIdException {
+    public void setInfo(Employee employee_) throws SQLException, NoRoleByIdException {
         loginLabel.setText("Логин: " + employee_.getUserLogin());
         nameLabel.setText("ФИО: " + employee_.getLastName() + " " + employee_.getFirstName() + " " + employee_.getMiddleName());
         emailLabel.setText("Электронная почта: " + employee_.getEmail());
         phoneLabel.setText("Телефон: " + employee_.getPhoneNumber());
-        roleLabel.setText("Роль в системе: " + Roles.getRoleName(employee_.getRoleId()));
+        roleLabel.setText("Роль в системе: " + roleService.getRoleById(employee_.getRoleId()).getRoleName());
         isActiveLabel.setText("Состояние аккаунта: " + (employee_.isActive() ? "активен" : "деактивирован"));
         postLabel.setText("Должность: " + employee_.getPost());
         salaryLabel.setText("Зарплата: " + employee_.getSalary());

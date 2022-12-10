@@ -77,7 +77,7 @@ public class AdminController {
     public void onEmployeeAddButtonClick() {
         try {
             EmployeeAddController controller = UIActions.createStage("admin/employees/add-employee-view.fxml", "Регистрация сотрудника",
-                    UIActions.getStage(nameLabel), true);
+                    UIActions.getStage(nameLabel), false);
             controller.setInfo(this);
         } catch (IOException exception) {
             new Alert(Alert.AlertType.ERROR, exception.getMessage(), ButtonType.OK).show();
